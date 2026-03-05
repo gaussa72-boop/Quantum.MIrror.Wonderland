@@ -1,0 +1,33 @@
+{
+  "name": "quantum-mirror-wonderland",
+  "version": "1.0.0",
+  "description": "A magical KI platform with Master Cat, mirror hall and Alice in Wonderland aesthetics",
+  "main": "app.py",
+  "scripts": {
+    "dev": "python app.py",
+    "start": "gunicorn --chdir . app:app",
+    "test": "pytest",
+    "lint": "flake8 backend",
+    "build": "docker build -t quantum-mirror:latest .",
+    "docker": "docker-compose up -d"
+  },
+  "keywords": [
+    "ai",
+    "quantum",
+    "mirror",
+    "wonderland",
+    "chat",
+    "game-generator"
+  ],
+  "author": "Adriano",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YourUsername/QuantumMirrorWonderland"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "python": ">=3.11"
+  }
+}
+

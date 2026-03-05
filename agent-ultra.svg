@@ -1,0 +1,13 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="ultra-gradient" cx="40%" cy="40%">
+      <stop offset="0%" style="stop-color:#FF1493;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B0040;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#ultra-gradient)" stroke="#FF1493" stroke-width="3"/>
+  <text x="100" y="120" font-size="80" text-anchor="middle" fill="#FFFFFF">🚀</text>
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#FF1493" stroke-width="2" opacity="0.5"/>
+  <text x="100" y="195" font-size="14" text-anchor="middle" fill="#FF1493" font-weight="bold">ULTRA</text>
+</svg>
+

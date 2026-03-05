@@ -1,0 +1,13 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="nexus-gradient" cx="40%" cy="40%">
+      <stop offset="0%" style="stop-color:#9370DB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3D1B4D;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#nexus-gradient)" stroke="#9370DB" stroke-width="3"/>
+  <text x="100" y="120" font-size="80" text-anchor="middle" fill="#FFFFFF">🧠</text>
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#9370DB" stroke-width="2" opacity="0.5"/>
+  <text x="100" y="195" font-size="14" text-anchor="middle" fill="#9370DB" font-weight="bold">NEXUS</text>
+</svg>
+

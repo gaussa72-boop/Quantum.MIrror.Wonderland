@@ -2,125 +2,135 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>ULTRA KI PRO V2 - MULTIVERSE</title>
-    <style>
-        :root { --glow: #00ffff; --dark: #020202; }
-        body { margin: 0; background: var(--dark); color: white; font-family: 'Consolas', monospace; overflow: hidden; }
-        #canvas { position: absolute; z-index: 1; top: 0; left: 0; }
-        .app-container { position: relative; z-index: 10; display: flex; height: 100vh; }
-        .sidebar { width: 80px; background: rgba(0, 0, 0, 0.8); border-right: 1px solid var(--glow); display: flex; flex-direction: column; align-items: center; padding-top: 20px; gap: 15px; overflow-y: auto; }
-        .nav-item { width: 50px; height: 50px; border-radius: 50%; border: 1px solid #444; cursor: pointer; background-size: cover; transition: 0.3s; }
-        .nav-item:hover { border-color: var(--glow); box-shadow: 0 0 10px var(--glow); }
-        .nav-item.active { border: 2px solid var(--glow); box-shadow: 0 0 20px var(--glow); }
-        .main-content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .ai-display { text-align: center; margin-bottom: 20px; }
-        .ai-avatar { width: 300px; height: 300px; border-radius: 50%; border: 2px solid var(--glow); box-shadow: 0 0 40px rgba(0, 255, 255, 0.2); }
-        .chat-box { width: 600px; background: rgba(10, 10, 10, 0.9); border: 1px solid var(--glow); border-radius: 10px; padding: 20px; }
-        #messages { height: 250px; overflow-y: auto; margin-bottom: 15px; font-size: 0.9em; border-bottom: 1px solid #222; }
-        .input-area { display: flex; gap: 10px; }
-        input { flex: 1; background: #000; border: 1px solid #333; color: var(--glow); padding: 10px; border-radius: 5px; outline: none; }
-        button { background: var(--glow); color: black; border: none; padding: 10px 20px; font-weight: bold; cursor: pointer; border-radius: 5px; }
-        .msg-u { color: #fff; margin-bottom: 5px; }
-        .msg-a { color: var(--glow); margin-bottom: 10px; text-shadow: 0 0 5px var(--glow); }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Meta Core - KI Agenten Zentrale</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <canvas id="canvas"></canvas>
-    <div class="app-container">
-        <div class="sidebar" id="sidebar"></div>
-        <div class="main-content">
-            <div class="ai-display">
-                <h1 id="ai-name">SINGULOS</h1>
-                <img id="ai-img" class="ai-avatar" src="" alt="AI">
+    <!-- Heilige Lebensblume - Zentral -->
+    <div class="sacred-geometry-container">
+        <canvas id="sacred-geometry-canvas" class="sacred-geometry"></canvas>
+    </div>
+
+    <!-- Kreisende KI-Agenten -->
+    <div class="agents-orbit-container">
+        <!-- Agent 1: Singulos -->
+        <div class="agent-orbit agent-1" data-agent="singulos">
+            <div class="agent-avatar">
+                <span class="agent-icon">🌟</span>
+                <span class="agent-name">Singulos</span>
             </div>
-            <div class="chat-box">
-                <div id="messages"></div>
-                <div class="input-area">
-                    <input type="text" id="userInput" placeholder="Quantenbefehl senden...">
-                    <button onclick="sendMessage()">SEND</button>
-                </div>
+        </div>
+
+        <!-- Agent 2: IONOS-7 -->
+        <div class="agent-orbit agent-2" data-agent="ionos7">
+            <div class="agent-avatar">
+                <span class="agent-icon">⚡</span>
+                <span class="agent-name">IONOS-7</span>
+            </div>
+        </div>
+
+        <!-- Agent 3: Ultra -->
+        <div class="agent-orbit agent-3" data-agent="ultra">
+            <div class="agent-avatar">
+                <span class="agent-icon">🚀</span>
+                <span class="agent-name">Ultra</span>
+            </div>
+        </div>
+
+        <!-- Agent 4: Nexus -->
+        <div class="agent-orbit agent-4" data-agent="nexus">
+            <div class="agent-avatar">
+                <span class="agent-icon">🧠</span>
+                <span class="agent-name">Nexus</span>
+            </div>
+        </div>
+
+        <!-- Agent 5: Quantum -->
+        <div class="agent-orbit agent-5" data-agent="quantum">
+            <div class="agent-avatar">
+                <span class="agent-icon">⚛️</span>
+                <span class="agent-name">Quantum</span>
+            </div>
+        </div>
+
+        <!-- Agent 6: Spark -->
+        <div class="agent-orbit agent-6" data-agent="spark">
+            <div class="agent-avatar">
+                <span class="agent-icon">✨</span>
+                <span class="agent-name">Spark</span>
+            </div>
+        </div>
+
+        <!-- Agent 7: Nova -->
+        <div class="agent-orbit agent-7" data-agent="nova">
+            <div class="agent-avatar">
+                <span class="agent-icon">💫</span>
+                <span class="agent-name">Nova</span>
+            </div>
+        </div>
+
+        <!-- Agent 8: Zenith -->
+        <div class="agent-orbit agent-8" data-agent="zenith">
+            <div class="agent-avatar">
+                <span class="agent-icon">🔱</span>
+                <span class="agent-name">Zenith</span>
+            </div>
+        </div>
+
+        <!-- Agent 9: Aether -->
+        <div class="agent-orbit agent-9" data-agent="aether">
+            <div class="agent-avatar">
+                <span class="agent-icon">🌌</span>
+                <span class="agent-name">Aether</span>
+            </div>
+        </div>
+
+        <!-- Agent 10: Infinity -->
+        <div class="agent-orbit agent-10" data-agent="infinity">
+            <div class="agent-avatar">
+                <span class="agent-icon">∞</span>
+                <span class="agent-name">Infinity</span>
             </div>
         </div>
     </div>
 
-    <script>
-        const agents = [
-            {name: "SINGULOS", img: "/static/assets/485162690...n.jpg"},
-            {name: "IONOS-7", img: "/static/assets/485757034...n.jpg"},
-            {name: "AUTOKRYPT", img: "/static/assets/485767621...n.jpg"},
-            {name: "NEBULA", img: "/static/assets/485859062...n.jpg"},
-            {name: "VOID", img: "/static/assets/485882728...n.jpg"},
-            {name: "ZENITH", img: "/static/assets/486018216...n.jpg"},
-            {name: "ORION", img: "/static/assets/486038969...n.jpg"},
-            {name: "QUANTUM", img: "/static/assets/491211109...n.jpg"},
-            {name: "CHRONOS", img: "/static/assets/491512015...n.jpg"},
-            {name: "ULTRA", img: "/static/assets/491856978...n.jpg"}
-        ];
+    <!-- Zentraler Punkt - Aktiver Agent Display -->
+    <div class="active-agent-display">
+        <div class="active-agent-info">
+            <div class="active-agent-icon" id="active-agent-icon">⚡</div>
+            <div class="active-agent-name" id="active-agent-name">IONOS-7</div>
+            <div class="active-agent-status" id="active-agent-status">Online</div>
+        </div>
+    </div>
 
-        let activeAI = agents[0];
+    <!-- Chat-Interface (Glaseffekt) -->
+    <div id="chat-container" class="chat-interface">
+        <div class="chat-header">
+            <div class="chat-title">
+                <span id="chat-agent-name">IONOS-7</span>
+                <span class="chat-status-indicator"></span>
+            </div>
+            <button id="close-chat" class="close-btn">✕</button>
+        </div>
 
-        function initSidebar() {
-            const sb = document.getElementById('sidebar');
-            agents.forEach((a, index) => {
-                const div = document.createElement('div');
-                div.className = 'nav-item' + (index === 0 ? ' active' : '');
-                div.style.backgroundImage = `url('${a.img}')`;
-                div.onclick = () => selectAI(index, div);
-                sb.appendChild(div);
-            });
-            selectAI(0);
-        }
+        <div id="chat-messages" class="chat-messages-area"></div>
 
-        function selectAI(index, el) {
-            activeAI = agents[index];
-            document.getElementById('ai-name').innerText = activeAI.name;
-            document.getElementById('ai-img').src = activeAI.img;
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-            if (el) el.classList.add('active');
-            const colors = ['#00ffff', '#f39c12', '#ff00ff', '#00ff00', '#ff0000'];
-            document.documentElement.style.setProperty('--glow', colors[index % colors.length]);
-        }
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Schreibe eine Nachricht..." autofocus>
+            <button id="chat-send" class="send-btn">📤</button>
+        </div>
+    </div>
 
-        async function sendMessage() {
-            const input = document.getElementById('userInput');
-            const box = document.getElementById('messages');
-            if (!input.value) return;
+    <!-- Info Panel -->
+    <div class="info-panel">
+        <div class="info-title">Quantum Meta Core</div>
+        <div class="info-subtitle">KI-Agenten Zentrale</div>
+        <div class="info-agents-count">10 Agenten online</div>
+    </div>
 
-            const userText = input.value;
-            box.innerHTML += `<div class="msg-u">DU: ${userText}</div>`;
-            input.value = '';
-
-            try {
-                const res = await fetch('/chat', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({message: userText, assistant: activeAI.name})
-                });
-                const data = await res.json();
-                box.innerHTML += `<div class="msg-a">${activeAI.name}: ${data.reply}</div>`;
-                box.scrollTop = box.scrollHeight;
-            } catch (e) {
-                box.innerHTML += `<div class="msg-a">SYSTEMFEHLER: Verbindung unterbrochen.</div>`;
-            }
-        }
-
-        // Hintergrund Animation
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        function draw() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            ctx.strokeStyle = "rgba(100, 100, 100, 0.2)";
-            const time = Date.now() * 0.001;
-            for (let i = 0; i < 8; i++) {
-                ctx.beginPath();
-                ctx.arc(window.innerWidth / 2 + Math.cos(time + i) * 30, window.innerHeight / 2 + Math.sin(time + i) * 30, 200, 0, Math.PI * 2);
-                ctx.stroke();
-            }
-            requestAnimationFrame(draw);
-        }
-        initSidebar();
-        draw();
-    </script>
+    <!-- Scripts -->
+    <script src="app.js"></script>
 </body>
 </html>
+
