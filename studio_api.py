@@ -34,7 +34,7 @@ def register_studio_routes(app):
 
     @app.get('/api/credits/balance/<user_id>')
     def credits_balance(user_id):
-        return jsonify({'user_id': str(user_id), 'credits': ledger.balance(str(user_id))})
+        return jsonify({'user_id': str(user_id), 'credits': ledger.balance(str(user_id)), 'available_credits': ledger.available_balance(str(user_id))})
 
     @app.post('/api/credits/checkout')
     def credits_checkout():
@@ -91,6 +91,7 @@ def register_studio_routes(app):
 
     @app.post('/api/generator/generate')
     def generate_artifact():
+        reservation_id = None
         try:
             data = request.get_json(silent=True) or {}
             user_id = str(data.get('user_id', '')).strip()
@@ -98,15 +99,18 @@ def register_studio_routes(app):
             if not user_id:
                 return jsonify({'error': 'user_id is required for paid generation.', 'code': 'AUTH_REQUIRED'}), 401
             cost = ledger.generation_cost(kind)
-            available = ledger.balance(user_id)
-            if available < cost:
+            try:
+                reservation_id = ledger.reserve_for_generation(user_id, kind)
+            except ValueError:
+                available = ledger.available_balance(user_id)
                 return jsonify({'error': f'Insufficient credits: {cost} required, {available} available.', 'code': 'INSUFFICIENT_CREDITS', 'required_credits': cost, 'available_credits': available, 'purchase_url': '/credits'}), 402
 
             result = engine.generate(data.get('prompt', ''), data.get('target', 'web'), kind)
-            charged = ledger.consume_for_generation(user_id, kind, result['project_id'])
+            charged = ledger.finalize_generation(reservation_id, result['project_id'])
+            reservation_id = None
             result['user_id'] = user_id
             result['credits_charged'] = charged
-            result['credits_remaining'] = ledger.balance(user_id)
+            result['credits_remaining'] = ledger.available_balance(user_id)
             result['quality'] = data.get('quality', '4k_ultra')
             result['target_fps'] = int(data.get('target_fps', 120))
             result['pipeline_version'] = '2.0'
@@ -114,10 +118,16 @@ def register_studio_routes(app):
             result['blueprint'] = orchestrator.build_blueprint(data.get('prompt', ''), result['target'], result['kind'], result['quality'])
             return jsonify(result), 201
         except GameGenerationError as exc:
+            if reservation_id:
+                ledger.release_generation(reservation_id)
             return jsonify({'error': str(exc)}), 400
         except (ValueError, TypeError) as exc:
+            if reservation_id:
+                ledger.release_generation(reservation_id)
             return jsonify({'error': str(exc)}), 400
         except Exception:
+            if reservation_id:
+                ledger.release_generation(reservation_id)
             app.logger.exception('generation failed')
             return jsonify({'error': 'Generation failed. Check the server logs.'}), 500
 
