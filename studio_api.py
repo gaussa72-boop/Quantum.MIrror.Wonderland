@@ -14,6 +14,9 @@ def register_studio_routes(app):
     @app.get('/studio')
     def studio(): return app.send_static_file('game_studio.html')
 
+    @app.get('/credits')
+    def credits_page(): return app.send_static_file('credits.html')
+
     @app.get('/api/generator/health')
     def generator_health():
         import os
@@ -28,24 +31,23 @@ def register_studio_routes(app):
     @app.post('/api/credits/checkout')
     def credits_checkout():
         data=request.get_json(silent=True) or {}; user_id=str(data.get('user_id','')).strip()
+        if not user_id: return jsonify({'error':'user_id is required'}),400
         try:
             intent=ledger.create_intent(user_id,data.get('package_id',''),data.get('provider','stripe'))
-            return jsonify({'payment_intent':intent.id,'user_id':intent.user_id,'package_id':intent.package_id,'provider':intent.provider,'amount_eur_cents':intent.amount_eur_cents,'credits':intent.credits,'status':'pending','integration':'configure the selected provider checkout/webhook before production use'}),201
+            return jsonify({'payment_intent':intent.id,'user_id':intent.user_id,'package_id':intent.package_id,'provider':intent.provider,'amount_eur_cents':intent.amount_eur_cents,'credits':intent.credits,'status':'pending','integration':'configure provider checkout and webhook before production use'}),201
         except ValueError as exc: return jsonify({'error':str(exc)}),400
 
     @app.post('/api/credits/webhook/<provider>')
     def credits_webhook(provider):
         import os
         if provider not in {'stripe','crypto'}: return jsonify({'error':'Unsupported provider'}),400
-        raw=request.get_data(); signature=request.headers.get('X-Quantum-Signature','')
-        secret=os.getenv('STRIPE_WEBHOOK_SECRET' if provider=='stripe' else 'CRYPTO_WEBHOOK_SECRET','')
+        raw=request.get_data(); signature=request.headers.get('X-Quantum-Signature',''); secret=os.getenv('STRIPE_WEBHOOK_SECRET' if provider=='stripe' else 'CRYPTO_WEBHOOK_SECRET','')
         if not verify_webhook(raw,signature,secret): return jsonify({'error':'Invalid webhook signature'}),401
         try:
             event=json.loads(raw.decode('utf-8')); intent_id=str(event.get('payment_intent','')); event_id=str(event.get('event_id',''))
             if event.get('status') != 'paid': return jsonify({'status':'ignored'}),200
-            granted=ledger.confirm(event_id,intent_id,provider)
-            return jsonify({'status':'credited','credits_granted':granted}),200
-        except (ValueError, json.JSONDecodeError, UnicodeDecodeError) as exc: return jsonify({'error':str(exc)}),400
+            granted=ledger.confirm(event_id,intent_id,provider); return jsonify({'status':'credited','credits_granted':granted}),200
+        except (ValueError,json.JSONDecodeError,UnicodeDecodeError) as exc: return jsonify({'error':str(exc)}),400
 
     @app.post('/api/generator/plan')
     def generator_plan():
