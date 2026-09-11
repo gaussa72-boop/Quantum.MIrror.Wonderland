@@ -1,6 +1,7 @@
 import json
 import hashlib
 import hmac
+import pytest
 from quantum_game_engine.credits import CreditLedger, verify_webhook
 
 
@@ -18,3 +19,18 @@ def test_webhook_signature():
     sig = hmac.new(secret.encode(), body, hashlib.sha256).hexdigest()
     assert verify_webhook(body, sig, secret)
     assert not verify_webhook(body, 'bad', secret)
+
+
+def test_generation_charge_is_atomic_and_logged():
+    ledger = CreditLedger()
+    intent = ledger.create_intent('u2', 'spark', 'stripe')
+    ledger.confirm('evt2', intent.id, 'stripe')
+    assert ledger.consume_for_generation('u2', 'game', 'abc123') == 25
+    assert ledger.balance('u2') == 75
+    assert ledger.entries[-1]['type'] == 'generation'
+
+
+def test_generation_rejects_insufficient_balance():
+    ledger = CreditLedger()
+    with pytest.raises(ValueError, match='Insufficient credits'):
+        ledger.consume_for_generation('empty', 'game', 'abc123')
