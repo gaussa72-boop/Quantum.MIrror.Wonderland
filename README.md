@@ -1,202 +1,67 @@
-# 🌀 Quantum Mirror Wonderland v1.0
+# 🪞 Dunkle Spiegel — Quantum AI Game Engine
 
-Eine magische KI-Plattform mit Master-Kater, Spiegelhalle und Alice-im-Wunderland Ästhetik.
+Quantum Mirror Wonderland ist jetzt die **Dunkle-Spiegel-Plattform mit integrierter KI-Game-Generation-Engine**.
 
-[![Deploy on Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/new?repo=https://github.com/YourUsername/QuantumMirrorWonderland)
+## 🎮 Was die Engine erzeugt
 
-## 🌟 Features
+Aus einer natürlichen Idee kann das Studio ein strukturiertes **Game, DLC oder Mod** für Web, Godot, Unity oder Unreal vorbereiten.
 
-✅ **Master-Kater** - Universeller KI-Begleiter mit 4 Persönlichkeitstönen  
-✅ **Spiegelhalle** - 6 bunte Spiegel als Buttons für Unterprogramme  
-✅ **Chat-System** - Retro-Chat mit Singularitätssonne Visualizer  
-✅ **User Avatar** - 10-Level Evolution System  
-✅ **Heilige Geometrien** - Animierte Meta-Geometrien im Hintergrund  
-✅ **Multi-Platform** - Web + iPad + Unity  
-✅ **Production-Ready** - Docker + Render Deploy  
+Generation Pipeline:
 
-## 🚀 Quick Start
+`Idee → Concept → Game Design → Gameplay → Welt → Charaktere/NPCs → Quests → Items → UI → Assets → Audio → Rendering → Tests → Package`
 
-### Lokal (Browser)
-```bash
-# Option 1: Direkter Browser-Zugriff
-open web/index.html
+## 🧠 Dunkle-Spiegel-Systeme
 
-# Option 2: Mit Web-Server
-cd web && python -m http.server 8000
-# Öffne: http://localhost:8000
-```
+- Mirror-World / Spiegelwelten
+- KI-Begleiter **Master-Kater**
+- persönliche Avatar-Systeme
+- prozedurale Welt- und Quest-Strukturen
+- NPC-KI-Blueprints
+- datengetriebene Items und Inhalte
+- Game / DLC / Mod-Pipeline
+- engine-agnostische Projektverträge
 
-### Mit Docker
-```bash
-docker-compose up -d
-# Öffne: http://localhost
-```
+## 🖥️ High-End Rendering
 
-### Python Backend
-```bash
-pip install -r backend/requirements.txt
-python backend/quantum_mirror_backend.py
-```
+Das Studio enthält ein `4k_ultra` Zielprofil mit 3840×2160, HDR, Raytracing, dynamischer Auflösung, Adaptive Quality, Texture Streaming, LOD, Occlusion Culling, Instancing und DLSS/FSR/XeSS-Optionen.
 
-## 📂 Projektstruktur
+**Hinweis:** Zielprofile garantieren keine bestimmte FPS-Zahl. Die reale Leistung hängt von Engine, GPU, Szene, Shadern und Assets ab.
 
-```
-QuantumMirrorWonderland/
-├── backend/
-│   ├── quantum_mirror_backend.py    # Flask Backend (400+ Zeilen)
-│   └── requirements.txt              # Python Dependencies
-├── web/
-│   ├── index.html                   # Haupt-Interface
-│   ├── style.css                    # Styling (300+ Zeilen)
-│   ├── mirror_world.js              # Spiegelhalle
-│   ├── companion_widget.js          # Master-Kater
-│   ├── chat.js                      # Chat-System
-│   ├── meta_geometry.js             # Heilige Geometrien
-│   └── user_avatar.js               # Avatar-Evolution
-├── unity/                           # Unity Templates
-├── mobile/                          # iPad Swift App Templates
-├── cloud/                           # Docker & Cloud Config
-├── docker-compose.yml               # Multi-Container Setup
-├── Dockerfile                       # Container Definition
-├── render.yaml                      # Render Deployment Config
-└── QUICK_START.md                   # Schnelleinstieg
-```
+## 🚀 Game Studio
 
-## 🎮 Gameplay
+Starte den Flask-Server und öffne `/studio`.
 
-1. **Spiegelhalle öffnen** - 6 bunte Spiegel
-2. **Spiegel klicken** - Neues Spiel/Programm erstellen
-3. **Mit Kater chatten** - Master-Kater antwortet intelligently
-4. **Avatar evoluciert** - Interaktionen = Level-Up
-5. **Spiegel zerbrechen** - Neue magische Designs entstehen
+Das Studio bietet:
 
-## 🛠 Technischer Stack
+1. Prompt eingeben
+2. Game / DLC / Mod auswählen
+3. Ziel-Engine auswählen
+4. Qualitäts- und FPS-Profil wählen
+5. Blueprint planen
+6. KI-generiertes Projekt erzeugen
+7. ZIP-Projekt herunterladen
 
-**Frontend:**
-- HTML5, CSS3, JavaScript ES6+
-- Canvas API für Visualizer
-- LocalStorage für Persistierung
+Mit `OPENAI_API_KEY` wird die KI-gestützte Code-Architektur aktiviert; ohne Schlüssel steht ein lokaler Fallback zur Verfügung.
 
-**Backend:**
-- Python 3.11+ mit Flask
-- SQLAlchemy ORM
-- PostgreSQL (Production)
-- Redis (Caching)
+## 🔐 Architektur
 
-**Deployment:**
-- Docker & Docker Compose
-- Render.com
-- NGINX Reverse Proxy
-- GitHub Actions CI/CD
+Generierter Code wird nicht automatisch im Flask-Prozess ausgeführt. Für Godot/Unity/Unreal sind isolierte Build-Worker vorgesehen. Dadurch kann die Web-Anwendung vom späteren Build-System getrennt werden.
 
-## 📱 Multi-Platform
+## 🧪 Qualitätssicherung
 
-- **Web** - HTML/CSS/JS (sofort spielbar)
-- **iPad** - Swift/SwiftUI App (in `mobile/`)
-- **Unity** - 3D Spiegelwelt (in `unity/`)
+GitHub Actions prüft Python-Kompilierung, Game-Engine-Tests und API-Smoke-Tests.
 
-## 🔐 Sicherheit
+## 📁 Zentrale Engine-Dateien
 
-✓ JWT Token Authentication  
-✓ bcrypt Password Hashing  
-✓ HTTPS/TLS Support  
-✓ CORS Protection  
-✓ Environment-based Secrets  
+- `game_engine.py` — Code-/Projektgenerator
+- `studio_api.py` — Game-Studio-API
+- `quantum_game_engine/pipeline.py` — Generation Pipeline
+- `quantum_game_engine/generation_v2.py` — V2-Orchestrator
+- `quantum_game_engine/dunkle_spiegel.py` — Welt-/Designschicht
+- `quantum_game_engine/rendering.py` — High-End Renderingprofile
+- `quantum_game_engine/schemas.py` — stabile Datenverträge
+- `game_studio.html/js/css` — Web Studio
 
-## 📈 Performance
+## ⚠️ Aktueller Entwicklungsstand
 
-✓ 60 FPS Canvas Animations  
-✓ <100ms API Response Time  
-✓ Redis Caching  
-✓ Lazy Loading  
-✓ Gzip Compression  
-
-## 🌍 Deployment
-
-### Render.com (Empfohlen)
-
-1. Fork dieses Repository auf GitHub
-2. Gehe zu [Render.com](https://render.com)
-3. Klicke "New" → "Web Service"
-4. Verbinde GitHub Repository
-5. Stelle `render.yaml` als Config bereit
-6. Deploy Button klicken
-
-**Automatische Features auf Render:**
-- PostgreSQL Database
-- Redis Cache
-- Auto-SSL/TLS
-- Auto-Scaling
-- Free Tier verfügbar
-
-### Docker Local
-
-```bash
-docker-compose up -d
-
-# Services:
-# - Backend: http://localhost:5000
-# - Frontend: http://localhost
-# - PostgreSQL: localhost:5432
-# - Redis: localhost:6379
-```
-
-### Manual Cloud Deployment
-
-```bash
-# AWS, GCP, Azure, Heroku, etc.
-# Siehe: cloud/ Verzeichnis für weitere Configs
-```
-
-## 📚 Dokumentation
-
-- `QUICK_START.md` - Schnelle Anleitung
-- `MEGA_ZIP_SUMMARY.txt` - Feature-Übersicht
-- `README_QUANTUM_MIRROR_WONDERLAND.md` - Technische Docs
-- Code-Comments im Source Code
-
-## 🐛 Troubleshooting
-
-### Web-Version lädt nicht
-```bash
-cd web && python -m http.server 8000
-```
-
-### Backend-Fehler
-```bash
-python backend/quantum_mirror_backend.py
-# Überprüfe Console auf Fehler
-```
-
-### Docker-Probleme
-```bash
-docker-compose down -v
-docker-compose up -d
-docker-compose logs -f backend
-```
-
-## 🤝 Contributing
-
-1. Fork das Repo
-2. Create Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit Changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to Branch (`git push origin feature/AmazingFeature`)
-5. Open Pull Request
-
-## 📄 Lizenz
-
-MIT License - siehe LICENSE Datei
-
-## 🌀 Status
-
-✅ **Version:** 1.0.0  
-✅ **Status:** Production Ready  
-✅ **Last Update:** March 4, 2026  
-✅ **Quality:** Enterprise Grade  
-
----
-
-**Gemacht mit 🐱✨ von Adriano**
-
-🌀 Quantum. Magisch. Wunderbar. 🌀
-
+Die Engine ist ein funktionierendes **Generator-Framework und Projekt-Scaffold**. Vollautomatische AAA-Asset-Erzeugung, native Engine-Builds und sichere Build-Worker sind separate Produktionsstufen und werden nicht als bereits fertig behauptet.
