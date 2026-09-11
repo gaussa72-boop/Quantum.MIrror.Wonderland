@@ -1,22 +1,39 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#070912"><title>Dunkle Spiegel — AI Game Studio</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050816">
+<title>Quantum Mirror Wonderland — Dunkle Spiegel AI Game Engine</title>
 <link rel="stylesheet" href="game_studio.css">
 </head>
-<body><div class="stars"></div>
-<main>
-<header><div><span class="eyebrow">DUNKLE SPIEGEL · QUANTUM MIRROR WONDERLAND</span><h1>AI Game Studio</h1><p>Idee → Design → Code → Assets → Tests → Projekt</p></div><span id="status" class="status">● bereit</span></header>
-<section class="studio">
-<aside><h2>1 · Deine Idee</h2><label for="prompt">Was soll die KI erschaffen?</label>
-<textarea id="prompt" maxlength="16000" placeholder="Erstelle ein dunkles Quantum-Fantasy-Action-RPG mit Spiegelwelten, einer KI-Katze als Begleiter, prozeduralen Welten, Bosskämpfen, Inventar und eigenen Quests …"></textarea>
-<div class="grid"><label>Typ<select id="kind"><option value="game">Game</option><option value="dlc">DLC / Erweiterung</option><option value="mod">Mod</option></select></label><label>Ziel<select id="target"><option value="web">Web</option><option value="godot">Godot</option><option value="unity">Unity</option><option value="unreal">Unreal</option></select></label></div>
-<h2>2 · Qualitätsprofil</h2><div class="grid"><label>Grafik<select id="quality"><option value="4k_ultra">4K Ultra</option><option value="1440p_high">1440p High</option><option value="1080p_balanced">1080p Balanced</option></select></label><label>FPS<select id="fps"><option>120</option><option>144</option><option>165</option><option>240</option><option>60</option></select></label></div>
-<div class="checks"><label><input id="rt" type="checkbox" checked> Ray Tracing</label><label><input id="hdr" type="checkbox" checked> HDR</label><label><input id="upscale" type="checkbox" checked> DLSS / FSR / XeSS</label><label><input id="assets" type="checkbox" checked> Asset-Pipeline</label><label><input id="tests" type="checkbox" checked> Automatische Tests</label></div>
-<div class="actions"><button id="plan" class="secondary">◇ PLAN ERSTELLEN</button><button id="generate">✦ GENERIEREN</button></div>
-<p class="hint">4K Ultra ist ein Zielprofil: tatsächliche FPS hängen von GPU, Engine, Szene und generierten Assets ab. Die Engine erzeugt bewusst keine geschützten Original-Assets und führt generierten Code nicht auf dem Webserver aus.</p>
+<body>
+<div class="cosmos"></div>
+<div class="app-shell">
+<header class="topbar">
+  <div class="brand"><div class="brand-mark">◈</div><div><div class="brand-title">QUANTUM MIRROR<br>WONDERLAND</div><div class="brand-sub">DUNKLE SPIEGEL · AI GAME ENGINE</div></div></div>
+  <nav><a>Home</a><a class="active">Game Studio</a><a>Mirror World</a><a>KI-Companions</a><a>Assets</a><a>Community</a><a>Docs</a></nav>
+  <div class="profile">◉ Mein Profil　⚙</div><button class="top-generate" id="topGenerate">GENERATE</button>
+</header>
+<div class="tagline">„Deine Ideen. Unendliche Welten.“</div>
+<div class="workspace">
+<aside class="left-panel">
+  <div class="panel-title">⌘ <b>Game Generator</b></div>
+  <button class="side-item active">◈ <span>Game Generator</span></button><button class="side-item" data-kind="dlc">◇ <span>DLC Generator</span></button><button class="side-item" data-kind="mod">⚒ <span>Mod Generator</span></button>
+  <button class="side-item">◎ <span>Welt Generator</span></button><button class="side-item">♙ <span>Charaktere & NPCs</span></button><button class="side-item">✧ <span>Quests & Story</span></button><button class="side-item">▣ <span>Assets & Audio</span></button><button class="side-item">◫ <span>Rendering & Grafik</span></button><button class="side-item">⌬ <span>KI Assistenz</span></button><button class="side-item">▤ <span>Projektverwaltung</span></button>
+  <div class="companion-card"><div class="panel-title">✦ KI-Companions</div><div class="cat-avatar">🐈‍⬛</div><div><b>Master-Kater</b><small>Dein KI-Begleiter</small></div><div class="speech">„Bereit, eine neue Welt zu erschaffen?“</div><div class="companions"><span>◉ Luna<br><small>Welt & Lore</small></span><span>◉ Orion<br><small>Technik & Code</small></span><span>◉ Nyx<br><small>Kreativität & Kunst</small></span><span>◉ Kael<br><small>Balance & Story</small></span></div></div>
 </aside>
-<section class="result"><div class="empty" id="empty"><strong>Bereit für deine Idee.</strong><br>Der Plan zeigt dir zuerst Welt, Systeme, Rendering und Build-Anforderungen.</div>
-<div id="result" hidden><div class="result-head"><div><span class="badge" id="badge"></span><h2 id="name"></h2></div><a id="download" class="download">⬇ Projekt-ZIP</a></div><p id="description"></p><div id="planbox" class="planbox" hidden></div><div class="columns"><div><h3>Projektdateien</h3><ul id="files"></ul></div><div><h3>Testplan</h3><ol id="tests"></ol><h3>Nächste Schritte</h3><ol id="steps"></ol></div></div></div></section>
-</section></main><script src="game_studio.js"></script></body></html>
+<main class="center-panel">
+  <section class="hero"><div class="hero-art"><div class="moon">◉</div><div class="castle">♜</div><div class="hero-figure">♟　🐈‍⬛</div></div><div class="hero-copy"><h1>DUNKLE SPIEGEL</h1><h2>WELTEN ENTSTEHEN AUS DEINER VORSTELLUNG</h2><p>KI. Kreativität. Unendliche Möglichkeiten.</p><strong>MEHR ALS SPIELE.<br>DAS BIST DU.</strong><em>„In jedem Spiel spiegelt sich<br>ein Teil deiner Seele.“<br>— Dunkle Spiegel</em></div></section>
+  <div class="mode-row"><button class="mode active">🎮 <b>Game erstellen</b><small>Aus einer Idee ein vollständiges Spiel generieren</small></button><button class="mode" data-kind="dlc">◇ <b>DLC erstellen</b><small>Neue Welten und Inhalte für deine Spiele</small></button><button class="mode" data-kind="mod">⚒ <b>Mod erstellen</b><small>Mods für bestehende Spiele generieren</small></button><button class="mode"><◎ <b>Welt generieren</b><small>Einzigartige Welten mit KI erschaffen</small></button></div>
+  <section class="generator-card"><div class="section-heading">⌬ <b>Deine Idee / Prompt</b><button id="example">Beispielprompts</button></div><textarea id="prompt" maxlength="16000" placeholder="z.B. „Ein Open-World RPG in einer futuristischen Fantasy-Welt mit magischer Technologie, dynamischem Wetter, eigenen Fraktionen und einem KI-Begleiter.“"></textarea><div class="counter"><span id="count">0</span>/16000</div>
+  <div class="controls"><label>Projekt-Typ<select id="kind"><option value="game">Spiel (Vollversion)</option><option value="dlc">DLC / Erweiterung</option><option value="mod">Mod</option></select></label><label>Ziel-Engine<select id="target"><option value="unreal">Unreal</option><option value="unity">Unity</option><option value="godot">Godot</option><option value="web">Web</option></select></label><label>Qualitätsprofil<select id="quality"><option value="4k_ultra">4K Ultra</option><option value="1440p_high">1440p High</option><option value="1080p_balanced">1080p Balanced</option></select></label><label>FPS-Ziel<select id="fps"><option>120</option><option>144</option><option>165</option><option>240</option><option>60</option></select></label></div>
+  <div class="feature-row"><label><input id="rt" type="checkbox" checked> Raytracing</label><label><input id="hdr" type="checkbox" checked> HDR</label><label><input id="upscale" type="checkbox" checked> DLSS / FSR / XeSS</label><label><input id="assets" type="checkbox" checked> Prozedurale Welt</label><label><input id="tests" type="checkbox" checked> KI-NPCs</label></div>
+  <div class="generate-row"><button id="plan" class="plan-btn">◇ PLAN ERSTELLEN</button><button id="generate" class="generate-btn">🚀 GENERIERUNG STARTEN　»</button></div><div id="status" class="engine-status">● ENGINE ONLINE · bereit</div></section>
+  <section class="projects"><div class="section-heading">◈ <b>Generierte Projekte</b><span>Beispiele & deine letzten Projekte</span></div><div class="project-grid"><article><div class="thumb t1">🏰</div><b>Echoes of Aeternum</b><small>Open-World RPG · Unity · 4K · 120 FPS</small></article><article><div class="thumb t2">🌃</div><b>Neon Nexus</b><small>Sci-Fi Adventure · Unreal · Raytracing · HDR</small></article><article><div class="thumb t3">🌑</div><b>Shadow Realms</b><small>Dark Fantasy · Godot · Mod · DLC</small></article><article><div class="thumb t4">🌲</div><b>Last Light</b><small>Survival · Unity · Prozedural · KI-NPCs</small></article><article><div class="thumb t5">💎</div><b>Crystal Skies</b><small>Fantasy MMORPG · Unreal · 4K · Online</small></article><article><div class="thumb t6">🪞</div><b>Mirror World</b><small>Dunkle Spiegel Universe · Web · KI</small></article></div></section>
+  <section id="result" class="result-card" hidden><div class="section-heading">✦ <b>Generiertes Projekt</b><a id="download" class="download">⬇ Projekt-ZIP</a></div><h2 id="name"></h2><p id="description"></p><div id="planbox" class="planbox"></div><div class="result-columns"><div><h3>Projektdateien</h3><ul id="files"></ul></div><div><h3>Testplan</h3><ol id="tests"></ol></div><div><h3>Nächste Schritte</h3><ol id="steps"></ol></div></div></section>
+</main>
+<aside class="right-panel"><section><h3>⚙ Render Einstellungen</h3><label>Qualitätsprofil<select id="qualitySide"><option value="4k_ultra">4K Ultra HD</option><option value="1440p_high">1440p High</option><option value="1080p_balanced">1080p Balanced</option></select></label><label>Auflösung<div class="readout">3840 × 2160 (4K)</div></label><label>Ziel-FPS<select id="fpsSide"><option>120 FPS</option><option>144 FPS</option><option>165 FPS</option><option>240 FPS</option></select></label><div class="toggles"><span>Raytracing <i class="on"></i></span><span>HDR <i class="on"></i></span><span>DLSS / FSR / XeSS <i class="on"></i></span><span>Dynamische Auflösung <i class="on"></i></span><span>Texture Streaming <i class="on"></i></span><span>LOD (Level of Detail) <i class="on"></i></span><span>Occlusion Culling <i class="on"></i></span><span>High-End Shader <i class="on"></i></span></div></section><section><h3>⚡ System Status</h3><div class="status-list"><span>● KI-Engine <b>Online</b></span><span>● Game Generator <b>Bereit</b></span><span>● Asset Pipeline <b>Bereit</b></span><span>● Build Worker <b>Bereitschaft</b></span><span>● Dunkle Spiegel Core <b>Aktiv</b></span><span>● Alle Systeme <b>Nominal</b></span></div></section><section class="quote">„Technologie ist Magie,<br>die funktioniert.“<small>— Arthur C. Clarke</small></section></aside>
+</div>
+<footer>◈ QUANTUM MIRROR WONDERLAND　|　DUNKLE SPIEGEL AI GAME ENGINE　|　CREATE　∞　EXPLORE　∞　MOD　∞　SHARE　∞　EVOLVE <span>Version 2.0 · Made with ♡ for infinite worlds</span></footer>
+</div>
+<script src="game_studio.js"></script>
+</body></html>
