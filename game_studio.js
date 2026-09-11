@@ -8,7 +8,7 @@ const payload = () => ({
   upscaling: $('upscale').checked, assets: $('assets').checked, tests: $('tests').checked
 });
 const setBusy = (busy, text) => { $('plan').disabled = busy; $('generate').disabled = busy; status.textContent = text; };
-const esc = (s) => String(s).replace(/[&<>\"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','\\"':'&quot;',"'":'&#39;'}[c]));
+const esc = (s) => String(s).replace(/[&<>\"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 $('plan').addEventListener('click', async () => {
   if (prompt.value.trim().length < 3) { prompt.focus(); return; }
@@ -23,7 +23,7 @@ $('plan').addEventListener('click', async () => {
     $('planbox').innerHTML = `<b>Rendering:</b> ${esc(data.visual.resolution)} · ${data.visual.target_fps} FPS Ziel · HDR ${data.visual.hdr?'ON':'OFF'} · RT ${data.visual.ray_tracing?'ON':'OFF'}<br><b>Pipeline:</b> ${esc(data.design.systems.join(' · '))}<br><b>Assets:</b> LOD ${data.asset_pipeline.lod?'ON':'OFF'} · Streaming ${data.asset_pipeline.texture_streaming?'ON':'OFF'} · Build-Isolation ${data.quality.build_isolation_required?'erforderlich':'optional'}`;
     status.textContent = '● plan bereit';
   } catch (e) { status.textContent = '● fehler'; alert(e.message); }
-  finally { setBusy(false, status.textContent); }
+  finally { $('plan').disabled = false; $('generate').disabled = false; }
 });
 
 $('generate').addEventListener('click', async () => {
