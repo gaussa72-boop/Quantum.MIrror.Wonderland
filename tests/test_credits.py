@@ -34,3 +34,27 @@ def test_generation_rejects_insufficient_balance():
     ledger = CreditLedger()
     with pytest.raises(ValueError, match='Insufficient credits'):
         ledger.consume_for_generation('empty', 'game', 'abc123')
+
+
+def test_reservation_blocks_overspend_and_finalize_charges_once():
+    ledger = CreditLedger()
+    intent = ledger.create_intent('u3', 'spark', 'stripe')
+    ledger.confirm('evt3', intent.id, 'stripe')
+    first = ledger.reserve_for_generation('u3', 'game')
+    assert ledger.available_balance('u3') == 75
+    with pytest.raises(ValueError, match='Insufficient credits'):
+        ledger.reserve_for_generation('u3', 'game')
+    assert ledger.finalize_generation(first, 'project-1') == 25
+    assert ledger.balance('u3') == 75
+    assert ledger.available_balance('u3') == 75
+
+
+def test_failed_generation_can_release_reservation():
+    ledger = CreditLedger()
+    intent = ledger.create_intent('u4', 'spark', 'stripe')
+    ledger.confirm('evt4', intent.id, 'stripe')
+    reservation = ledger.reserve_for_generation('u4', 'game')
+    assert ledger.available_balance('u4') == 75
+    assert ledger.release_generation(reservation) == 25
+    assert ledger.available_balance('u4') == 100
+    assert ledger.release_generation(reservation) == 0
