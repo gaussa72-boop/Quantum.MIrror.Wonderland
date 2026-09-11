@@ -1,1 +1,22 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Quantum Game Studio</title><link rel="stylesheet" href="game_studio.css"></head><body><div class="stars"></div><main><header><div><span class="eyebrow">QUANTUM MIRROR WONDERLAND</span><h1>AI Game Studio</h1><p>Idee → Game · DLC · Mod · Projekt-ZIP</p></div><span id="status" class="status">● bereit</span></header><section class="studio"><aside><h2>Generator</h2><label>Was soll die KI bauen?</label><textarea id="prompt" placeholder="Erstelle ein Sci-Fi-Roguelite mit drei Welten, Gegner-KI, Inventar und Bosskampf …"></textarea><div class="grid"><label>Typ<select id="kind"><option value="game">Game</option><option value="dlc">DLC</option><option value="mod">Mod</option></select></label><label>Ziel<select id="target"><option value="web">Web</option><option value="godot">Godot</option><option value="unity">Unity</option><option value="unreal">Unreal</option></select></label></div><button id="generate">✦ GENERIEREN</button><p class="hint">Mit <code>OPENAI_API_KEY</code> erzeugt die Engine KI-generierten Code. Ohne Schlüssel läuft ein lokaler Fallback-Generator.</p></aside><section class="result"><div class="empty" id="empty">Beschreibe dein Spiel und starte die Generierung.</div><div id="result" hidden><h2 id="name"></h2><p id="description"></p><a id="download" class="download">⬇ Projekt-ZIP herunterladen</a><h3>Dateien</h3><ul id="files"></ul><h3>Nächste Schritte</h3><ol id="steps"></ol></div></section></section></main><script src="game_studio.js"></script></body></html>
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#070912"><title>Dunkle Spiegel — AI Game Studio</title>
+<link rel="stylesheet" href="game_studio.css">
+</head>
+<body><div class="stars"></div>
+<main>
+<header><div><span class="eyebrow">DUNKLE SPIEGEL · QUANTUM MIRROR WONDERLAND</span><h1>AI Game Studio</h1><p>Idee → Design → Code → Assets → Tests → Projekt</p></div><span id="status" class="status">● bereit</span></header>
+<section class="studio">
+<aside><h2>1 · Deine Idee</h2><label for="prompt">Was soll die KI erschaffen?</label>
+<textarea id="prompt" maxlength="16000" placeholder="Erstelle ein dunkles Quantum-Fantasy-Action-RPG mit Spiegelwelten, einer KI-Katze als Begleiter, prozeduralen Welten, Bosskämpfen, Inventar und eigenen Quests …"></textarea>
+<div class="grid"><label>Typ<select id="kind"><option value="game">Game</option><option value="dlc">DLC / Erweiterung</option><option value="mod">Mod</option></select></label><label>Ziel<select id="target"><option value="web">Web</option><option value="godot">Godot</option><option value="unity">Unity</option><option value="unreal">Unreal</option></select></label></div>
+<h2>2 · Qualitätsprofil</h2><div class="grid"><label>Grafik<select id="quality"><option value="4k_ultra">4K Ultra</option><option value="1440p_high">1440p High</option><option value="1080p_balanced">1080p Balanced</option></select></label><label>FPS<select id="fps"><option>120</option><option>144</option><option>165</option><option>240</option><option>60</option></select></label></div>
+<div class="checks"><label><input id="rt" type="checkbox" checked> Ray Tracing</label><label><input id="hdr" type="checkbox" checked> HDR</label><label><input id="upscale" type="checkbox" checked> DLSS / FSR / XeSS</label><label><input id="assets" type="checkbox" checked> Asset-Pipeline</label><label><input id="tests" type="checkbox" checked> Automatische Tests</label></div>
+<div class="actions"><button id="plan" class="secondary">◇ PLAN ERSTELLEN</button><button id="generate">✦ GENERIEREN</button></div>
+<p class="hint">4K Ultra ist ein Zielprofil: tatsächliche FPS hängen von GPU, Engine, Szene und generierten Assets ab. Die Engine erzeugt bewusst keine geschützten Original-Assets und führt generierten Code nicht auf dem Webserver aus.</p>
+</aside>
+<section class="result"><div class="empty" id="empty"><strong>Bereit für deine Idee.</strong><br>Der Plan zeigt dir zuerst Welt, Systeme, Rendering und Build-Anforderungen.</div>
+<div id="result" hidden><div class="result-head"><div><span class="badge" id="badge"></span><h2 id="name"></h2></div><a id="download" class="download">⬇ Projekt-ZIP</a></div><p id="description"></p><div id="planbox" class="planbox" hidden></div><div class="columns"><div><h3>Projektdateien</h3><ul id="files"></ul></div><div><h3>Testplan</h3><ol id="tests"></ol><h3>Nächste Schritte</h3><ol id="steps"></ol></div></div></div></section>
+</section></main><script src="game_studio.js"></script></body></html>
