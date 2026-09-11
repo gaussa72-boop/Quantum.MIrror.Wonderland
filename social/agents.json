@@ -1,0 +1,1 @@
+{"project":"Quantum.MIrror.Wonderland","agents":[{"id":"wonderland","name":"Wonderland AI Agent","topic":"game-world"},{"id":"assistant","name":"Wonderland Assistant","topic":"general"},{"id":"bot","name":"Wonderland Game Bot","topic":"gaming"}],"social_layer":"Quantum.K/social"}
