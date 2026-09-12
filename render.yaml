@@ -1,11 +1,12 @@
 services:
   - type: web
-    name: quantum-mirror
-    env: python
-    plan: starter
+    name: quantum-mirror-wonderland
+    runtime: python
+    plan: free
     branch: main
-    buildCommand: pip install -r backend/requirements.txt
-    startCommand: gunicorn --chdir . app:app --bind 0.0.0.0:$PORT
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    healthCheckPath: /health
     envVars:
       - key: FLASK_ENV
         value: production
@@ -13,11 +14,5 @@ services:
         value: false
       - key: SECRET_KEY
         generateValue: true
-      - key: JWT_SECRET_KEY
-        generateValue: true
-      - key: DATABASE_URL
-        value: sqlite:///quantum_mirror.db
-      - key: REDIS_URL
-        value: redis://localhost:6379/0
-
-
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
