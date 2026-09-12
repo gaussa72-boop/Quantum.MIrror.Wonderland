@@ -25,7 +25,7 @@ def register_studio_routes(app):
 
     @app.get('/api/generator/health')
     def generator_health():
-        return jsonify({'status': 'ready', 'ai_provider': 'openai' if os.getenv('OPENAI_API_KEY') else 'local-fallback', 'model': engine.model, 'targets': ['web', 'godot', 'unity', 'unreal'], 'artifacts': ['game', 'dlc', 'mod'], 'quality_presets': ['4k_ultra', '1440p_high', '1080p_balanced'], 'pipeline_v2': True})
+        return jsonify({'status': 'ready', 'ai_provider': 'openai' if os.getenv('OPENAI_API_KEY') else 'local-fallback', 'model': engine.model, 'targets': ['web', 'godot', 'unity', 'unreal'], 'artifacts': ['game', 'dlc', 'mod'], 'quality_presets': ['4k_ultra', '1440p_high', '1080p_balanced'], 'pipeline_v2': True, 'generation_billing': 'free'})
 
     @app.get('/api/credits/catalog')
     def credits_catalog():
@@ -121,6 +121,8 @@ def register_studio_routes(app):
             plan = pipeline.plan(spec)
             plan['render_profile'] = profile_for(spec.target, spec.quality)
             plan['blueprint'] = orchestrator.build_blueprint(spec.prompt, spec.target, spec.kind, spec.quality)
+            plan['generation_cost'] = 0
+            plan['billing'] = 'free'
             return jsonify(plan)
         except (ValueError, TypeError) as exc:
             return jsonify({'error': str(exc)}), 400
@@ -135,34 +137,20 @@ def register_studio_routes(app):
 
     @app.post('/api/generator/generate')
     def generate_artifact():
-        reservation_id = None
         try:
             data = request.get_json(silent=True) or {}
-            user_id = str(data.get('user_id', '')).strip()
+            user_id = str(data.get('user_id', '')).strip() or 'guest'
             kind = data.get('kind', 'game')
-            if not user_id:
-                return jsonify({'error': 'user_id is required for paid generation.', 'code': 'AUTH_REQUIRED'}), 401
-            cost = ledger.generation_cost(kind)
-            try:
-                reservation_id = ledger.reserve_for_generation(user_id, kind)
-            except ValueError:
-                available = ledger.available_balance(user_id)
-                return jsonify({'error': f'Insufficient credits: {cost} required, {available} available.', 'code': 'INSUFFICIENT_CREDITS', 'required_credits': cost, 'available_credits': available, 'purchase_url': '/credits'}), 402
             result = engine.generate(data.get('prompt', ''), data.get('target', 'web'), kind)
-            charged = ledger.finalize_generation(reservation_id, result['project_id'])
-            reservation_id = None
-            result.update({'user_id': user_id, 'credits_charged': charged, 'credits_remaining': ledger.available_balance(user_id), 'quality': data.get('quality', '4k_ultra'), 'target_fps': int(data.get('target_fps', 120)), 'pipeline_version': '2.0'})
+            result.update({'user_id': user_id, 'credits_charged': 0, 'credits_remaining': None, 'generation_cost': 0, 'billing': 'free', 'quality': data.get('quality', '4k_ultra'), 'target_fps': int(data.get('target_fps', 120)), 'pipeline_version': '2.0'})
             result['render_profile'] = profile_for(result['target'], result['quality'])
             result['blueprint'] = orchestrator.build_blueprint(data.get('prompt', ''), result['target'], result['kind'], result['quality'])
             return jsonify(result), 201
         except GameGenerationError as exc:
-            if reservation_id: ledger.release_generation(reservation_id)
             return jsonify({'error': str(exc)}), 400
         except (ValueError, TypeError) as exc:
-            if reservation_id: ledger.release_generation(reservation_id)
             return jsonify({'error': str(exc)}), 400
         except Exception:
-            if reservation_id: ledger.release_generation(reservation_id)
             app.logger.exception('generation failed')
             return jsonify({'error': 'Generation failed. Check the server logs.'}), 500
 
