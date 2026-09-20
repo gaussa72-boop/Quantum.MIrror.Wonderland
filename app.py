@@ -51,6 +51,10 @@ def create_mirror():
 def break_mirror(mirror_id):
     return jsonify(backend.break_mirror(mirror_id)),200
 
+@app.route('/chat')
+def chat_page():
+    return send_from_directory('.', 'chat.html')
+
 @app.route('/engine')
 def engine_alias():
     return redirect('/studio')
