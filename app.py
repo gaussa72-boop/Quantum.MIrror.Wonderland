@@ -1,13 +1,17 @@
 """Quantum Mirror Wonderland + Quantum Game Studio entry point."""
 import os
 import sys
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory, redirect
 from flask_cors import CORS
 from dotenv import load_dotenv
 load_dotenv()
 sys.path.insert(0, os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'backend'))
 from quantum_mirror_backend import QuantumMirrorBackend
+try:
+    from openai import OpenAI
+except Exception:
+    OpenAI = None
 
 app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app, origins=os.getenv('CORS_ORIGINS', '*').split(','))
@@ -46,6 +50,36 @@ def create_mirror():
 @app.route('/api/mirror/<mirror_id>/break',methods=['POST'])
 def break_mirror(mirror_id):
     return jsonify(backend.break_mirror(mirror_id)),200
+
+@app.route('/engine')
+def engine_alias():
+    return redirect('/studio')
+
+@app.route('/api/chat/ai', methods=['POST'])
+def ai_chat():
+    data=request.get_json(silent=True) or {}
+    message=str(data.get('message') or '').strip()
+    if not message: return jsonify({'error':'message is required'}),400
+    key=os.getenv('OPENAI_API_KEY')
+    if not key or OpenAI is None:
+        return jsonify({'error':'OPENAI_API_KEY is not configured'}),503
+    try:
+        tools=[{'type':'web_search','search_context_size':'medium'}] if os.getenv('ENABLE_WEB_SEARCH','true').lower()=='true' else []
+        response=OpenAI(api_key=key).responses.create(
+            model=os.getenv('OPENAI_MODEL','gpt-6-astra'),
+            reasoning={'effort':'high'},
+            tools=tools,
+            tool_choice='auto',
+            store=False,
+            input=[
+                {'role':'system','content':'Du bist Quantum Mirror Wonderland. Arbeite wie ein moderner KI-Architekt für Game Design, Worldbuilding, Code und Recherche. Liefere konkrete, sichere und überprüfbare Ergebnisse.'},
+                {'role':'user','content':message}
+            ]
+        )
+        return jsonify({'response':response.output_text or 'Keine Antwort.','model':os.getenv('OPENAI_MODEL','gpt-6-astra')})
+    except Exception:
+        app.logger.exception('Astra chat failure')
+        return jsonify({'error':'KI-Schnittstelle momentan nicht erreichbar.'}),502
 
 @app.route('/api/chat/send',methods=['POST'])
 def send_chat_message():
