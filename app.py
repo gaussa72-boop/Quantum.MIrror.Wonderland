@@ -119,9 +119,9 @@ def engine_alias():
 @app.route('/api/chat/ai', methods=['POST'])
 def ai_chat():
     data=request.get_json(silent=True) or {}
-    message=str(data.get('message') or '').strip()\n    selected_model=str(data.get('model') or os.getenv('OPENAI_MODEL','openai/gpt-5.6-luna')).strip()
+    message=str(data.get('message') or '').strip()\n    selected_model=str(data.get('model') or os.getenv('OPENAI_MODEL','openai/gpt-5.6-luna')).strip()\n    selected_model=str(data.get('model') or os.getenv('OPENAI_MODEL','openai/gpt-5.6-luna')).strip()
     if not message: return jsonify({'error':'message is required'}),400
-    key=os.getenv('OPENAI_API_KEY')\n    router_key=os.getenv('OPENROUTER_API_KEY')
+    key=os.getenv('OPENAI_API_KEY')\n    router_key=os.getenv('OPENROUTER_API_KEY')\n    router_key=os.getenv('OPENROUTER_API_KEY')
     if not key or OpenAI is None:
         return jsonify({'error':'OPENAI_API_KEY is not configured'}),503
     try:
