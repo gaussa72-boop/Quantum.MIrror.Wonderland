@@ -119,15 +119,15 @@ def engine_alias():
 @app.route('/api/chat/ai', methods=['POST'])
 def ai_chat():
     data=request.get_json(silent=True) or {}
-    message=str(data.get('message') or '').strip()
+    message=str(data.get('message') or '').strip()\n    selected_model=str(data.get('model') or os.getenv('OPENAI_MODEL','openai/gpt-5.6-luna')).strip()
     if not message: return jsonify({'error':'message is required'}),400
-    key=os.getenv('OPENAI_API_KEY')
+    key=os.getenv('OPENAI_API_KEY')\n    router_key=os.getenv('OPENROUTER_API_KEY')
     if not key or OpenAI is None:
         return jsonify({'error':'OPENAI_API_KEY is not configured'}),503
     try:
         tools=[{'type':'web_search','search_context_size':'medium'}] if os.getenv('ENABLE_WEB_SEARCH','true').lower()=='true' else []
-        response=OpenAI(api_key=key).responses.create(
-            model=os.getenv('OPENAI_MODEL','gpt-6-astra'),
+        response=(OpenAI(api_key=router_key,base_url='https://openrouter.ai/api/v1') if router_key else OpenAI(api_key=key)).responses.create(
+            model=selected_model,
             reasoning={'effort':'high'},
             tools=tools,
             tool_choice='auto',
@@ -137,7 +137,7 @@ def ai_chat():
                 {'role':'user','content':message}
             ]
         )
-        return jsonify({'response':response.output_text or 'Keine Antwort.','model':os.getenv('OPENAI_MODEL','gpt-6-astra')})
+        return jsonify({'response':response.output_text or 'Keine Antwort.','model':selected_model})
     except Exception:
         app.logger.exception('Astra chat failure')
         return jsonify({'error':'KI-Schnittstelle momentan nicht erreichbar.'}),502
