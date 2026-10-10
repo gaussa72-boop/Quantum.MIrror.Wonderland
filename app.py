@@ -178,6 +178,8 @@ def send_web(path): return send_from_directory('.', path)
 
 from studio_api import register_studio_routes
 register_studio_routes(app)
+from ki_game_mod_api import register_ki_game_mod_routes
+register_ki_game_mod_routes(app)
 
 
 @app.route('/dark-mirror-game')
