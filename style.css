@@ -802,3 +802,11 @@ body {
     }
 }
 
+
+
+/* ChatGPT-inspired responsive redesign — Quantum Mirror Wonderland */
+:root{--chat-accent:#bd8cff;--chat-glow:rgba(189,140,255,.20);--chat-bg:#090b12;--chat-panel:#111521;--chat-line:rgba(255,255,255,.10);--chat-text:#f4f5f7;--chat-muted:#a6adbb}
+html{color-scheme:dark;scroll-behavior:smooth}body{background:radial-gradient(ellipse at 50% -15%,var(--chat-glow),transparent 55%),var(--chat-bg);color:var(--chat-text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;}
+button,input,textarea,select{font:inherit}input,textarea,select{background:rgba(10,13,21,.88);color:var(--chat-text);border:1px solid var(--chat-line);border-radius:14px;padding:12px 15px;outline:none;transition:border-color .2s,box-shadow .2s}input:focus,textarea:focus,select:focus{border-color:var(--chat-accent);box-shadow:0 0 0 3px var(--chat-glow)}button{border:1px solid var(--chat-line);border-radius:13px;transition:transform .18s,border-color .18s,box-shadow .18s;cursor:pointer}button:hover{border-color:var(--chat-accent);box-shadow:0 0 22px var(--chat-glow);transform:translateY(-1px)}
+nav,aside,[class*="sidebar"],[id*="sidebar"]{background:rgba(10,13,21,.88);border-color:var(--chat-line);backdrop-filter:blur(20px)}main,[class*="panel"],[class*="card"],.container{border-color:var(--chat-line)}[class*="card"],[class*="panel"]{border-radius:18px;box-shadow:0 12px 38px rgba(0,0,0,.18)}a{color:var(--chat-accent)}::selection{background:var(--chat-glow)}
+@media(max-width:760px){body{min-height:100dvh}nav,[class*="sidebar"],[id*="sidebar"]{max-width:100%;}main,.container{width:100%;max-width:100%;padding-left:14px;padding-right:14px}button{min-height:42px}input,textarea{max-width:100%;box-sizing:border-box}}
