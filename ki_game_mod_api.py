@@ -96,7 +96,8 @@ def register_ki_game_mod_routes(app):
         event_type = str(data.get("type") or "")
         event_data = data.get("data") if isinstance(data.get("data"), dict) else {}
         try:
-            result = engine.apply(GameState(), {"type": event_type, **event_data})
+            state = GameState(player=event_data.get("player", {}), world=event_data.get("world", {}), quests=event_data.get("quests", []), entities=event_data.get("entities", []), inventory=event_data.get("inventory", []), flags=event_data.get("flags", {}))
+            result = engine.apply(state, {"type": event_type, **event_data})
             memory.remember({"type": event_type, "data": event_data})
             return jsonify({"result": result})
         except ValueError as exc:
