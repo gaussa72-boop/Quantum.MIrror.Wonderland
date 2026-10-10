@@ -14,6 +14,24 @@
  analyze:{title:"Game Analyzer",fields:["Stärken","Risiko","Verbesserung","Test","Ergebnis"],values:["Klare Sammel- und Gate-Ziele","Lange Wege und unklare Quest-Hinweise","Lesbare Marker, Checkpoints und Quest-Log","Mobil/Desktop-Steuerung und Realm-Wechsel testen","Testfälle vor Veröffentlichung abhaken"]}
  };
  const drafts=[];const out=document.getElementById("output");
- window.runModule=function(name){const t=templates[name]||templates.world;const prompt=(document.getElementById("studioPrompt")?.value.trim())||(document.getElementById("worldPrompt")?.value.trim())||"Dark Mirror Wonderland";const data={module:t.title,prompt,createdAt:new Date().toISOString(),status:"Entwurf – lokal erstellt",items:{}};t.fields.forEach((f,i)=>data.items[f]=t.values[i]);data.items["Anpassung an deine Idee"]="Kontext: "+prompt+". Vor dem Einsatz im Spiel prüfen und anpassen.";drafts.unshift(data);if(out)out.textContent=t.title+"\n"+t.fields.map(f=>"• "+f+": "+data.items[f]).join("\n")+"\n\n"+data.items["Anpassung an deine Idee"]+"\n\nLokaler Prototyp: kein externes KI-Modell verbunden.";};
+ window.runModule=async function(name){
+  const t=templates[name]||templates.world;
+  const prompt=(document.getElementById("studioPrompt")?.value.trim())||(document.getElementById("worldPrompt")?.value.trim())||"Dark Mirror Wonderland";
+  const data={module:t.title,prompt,createdAt:new Date().toISOString(),status:"Entwurf",items:{}};
+  t.fields.forEach((f,i)=>data.items[f]=t.values[i]);
+  data.items["Anpassung an deine Idee"]="Kontext: "+prompt+". Vor dem Einsatz im Spiel prüfen und anpassen.";
+  let serverBlueprint=null;
+  try{
+   const response=await fetch("/api/generator/blueprint",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt,kind:"mod",target:"web",quality:"1080p_balanced"})});
+   if(response.ok){serverBlueprint=await response.json();data.status="Backend verbunden";data.backend={pipeline_version:serverBlueprint.pipeline_version,stages:serverBlueprint.stages,blueprint:serverBlueprint.blueprint};}
+   else{data.status="Lokaler Entwurf – Backend meldet HTTP "+response.status;}
+  }catch(_error){data.status="Lokaler Entwurf – Backend nicht erreichbar";}
+  drafts.unshift(data);
+  if(out){
+   const lines=t.fields.map(f=>"• "+f+": "+data.items[f]).join("\\n");
+   const backendText=serverBlueprint?"\\n\\nSERVER-BLUEPRINT\\n"+JSON.stringify(serverBlueprint.blueprint,null,2):"\\n\\nBackend nicht verbunden; lokale Vorlage bleibt verfügbar.";
+   out.textContent=t.title+"\\n"+lines+"\\n\\n"+data.items["Anpassung an deine Idee"]+backendText;
+  }
+ }; 
  window.exportDraft=function(){const data=drafts[0]||{module:"Dark Mirror AI Game Studio",items:{},note:"Bitte zuerst ein Modul auswählen."};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));const a=document.createElement("a");a.href=url;a.download="dark-mirror-game-draft.json";a.click();URL.revokeObjectURL(url);};
 })();
