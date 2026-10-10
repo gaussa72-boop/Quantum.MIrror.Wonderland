@@ -17,13 +17,15 @@ jobs:
       - run: python -m pip install --upgrade pip
       - run: pip install -r requirements.txt pytest
       - run: python -m compileall -q .
-      - run: pytest -q tests/test_game_engine.py tests/test_quantum_game_engine.py
+      - run: pytest -q tests/test_game_engine.py tests/test_quantum_game_engine.py tests/test_ki_game_mod.py
       - run: python - <<'PY'
 import os
 from app import app
 client = app.test_client()
 assert client.get('/health').status_code == 200
 assert client.get('/api/generator/health').status_code == 200
+assert client.get('/api/ki-game-mod/health').status_code == 200
+assert client.get('/dark-mirror-game/').status_code == 200
 plan = client.post('/api/generator/plan', json={'prompt':'Dunkle Spiegel RPG','target':'web','kind':'game'} )
 assert plan.status_code == 200, plan.data
 blueprint = client.post('/api/generator/blueprint', json={'prompt':'Mirror world adventure'})
