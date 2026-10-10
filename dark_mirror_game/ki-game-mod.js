@@ -53,10 +53,10 @@
   data.status=engineResult?"Backend verbunden":"Lokaler Entwurf";
   drafts.unshift(data);
   if(out){
-   const lines=t.fields.map(f=>"• "+f+": "+data.items[f]).join("\\n");
-   const engineText=engineResult?"\\n\\nKI-GAME-MOD-ENGINE\\n"+JSON.stringify(engineResult,null,2):"\\n\\nGame-Mod-Backend nicht erreichbar; lokale Vorlage bleibt verfügbar.";
-   const blueprintText=serverBlueprint?"\\n\\nSERVER-BLUEPRINT\\n"+JSON.stringify(serverBlueprint.blueprint,null,2):"";
-   out.textContent=t.title+"\\n"+lines+"\\n\\n"+data.items["Anpassung an deine Idee"]+engineText+blueprintText;
+   const lines=t.fields.map(f=>"• "+f+": "+data.items[f]).join("\n");
+   const engineText=engineResult?"\n\nKI-GAME-MOD-ENGINE\n"+JSON.stringify(engineResult,null,2):"\n\nGame-Mod-Backend nicht erreichbar; lokale Vorlage bleibt verfügbar.";
+   const blueprintText=serverBlueprint?"\n\nSERVER-BLUEPRINT\n"+JSON.stringify(serverBlueprint.blueprint,null,2):"";
+   out.textContent=t.title+"\n"+lines+"\n\n"+data.items["Anpassung an deine Idee"]+engineText+blueprintText;
   }
  };
  window.exportDraft=function(){const data=drafts[0]||{module:"Dark Mirror AI Game Studio",items:{},note:"Bitte zuerst ein Modul auswählen."};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));const a=document.createElement("a");a.href=url;a.download="dark-mirror-game-draft.json";a.click();URL.revokeObjectURL(url);};
