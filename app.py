@@ -119,10 +119,13 @@ def engine_alias():
 @app.route('/api/chat/ai', methods=['POST'])
 def ai_chat():
     data=request.get_json(silent=True) or {}
-    message=str(data.get('message') or '').strip()\n    selected_model=str(data.get('model') or os.getenv('OPENAI_MODEL','openai/gpt-5.6-luna')).strip()\n    selected_model=str(data.get('model') or os.getenv('OPENAI_MODEL','openai/gpt-5.6-luna')).strip()
+    message=str(data.get('message') or '').strip()
+    selected_model=str(data.get('model') or os.getenv('OPENAI_MODEL','openai/gpt-5.6-luna')).strip()
     if not message: return jsonify({'error':'message is required'}),400
-    key=os.getenv('OPENAI_API_KEY')\n    router_key=os.getenv('OPENROUTER_API_KEY')\n    router_key=os.getenv('OPENROUTER_API_KEY')
-    if not key or OpenAI is None:
+    key=os.getenv('OPENAI_API_KEY')
+    router_key=os.getenv('OPENROUTER_API_KEY')
+    router_key=os.getenv('OPENROUTER_API_KEY')
+    if not (key or router_key) or OpenAI is None:
         return jsonify({'error':'OPENAI_API_KEY is not configured'}),503
     try:
         tools=[{'type':'web_search','search_context_size':'medium'}] if os.getenv('ENABLE_WEB_SEARCH','true').lower()=='true' else []
@@ -175,6 +178,19 @@ def send_web(path): return send_from_directory('.', path)
 
 from studio_api import register_studio_routes
 register_studio_routes(app)
+
+
+@app.route('/dark-mirror-game')
+def dark_mirror_game_index_redirect():
+    return redirect('/dark-mirror-game/')
+
+@app.route('/dark-mirror-game/')
+def dark_mirror_game_index():
+    return send_from_directory(os.path.join(os.path.dirname(__file__), 'dark_mirror_game'), 'index.html')
+
+@app.route('/dark-mirror-game/<path:filename>')
+def dark_mirror_game_assets(filename):
+    return send_from_directory(os.path.join(os.path.dirname(__file__), 'dark_mirror_game'), filename)
 
 @app.errorhandler(404)
 def not_found(error): return jsonify({'error':'Not found'}),404
