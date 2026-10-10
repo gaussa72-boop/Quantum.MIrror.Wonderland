@@ -1,67 +1,39 @@
-# 🪞 Dunkle Spiegel — Quantum AI Game Engine
+# Quantum Mirror Wonderland — Dunkle Spiegel KI Game Engine
 
-Quantum Mirror Wonderland ist jetzt die **Dunkle-Spiegel-Plattform mit integrierter KI-Game-Generation-Engine**.
+Kanonische Python-Game-Studio-Anwendung. Sie vereint das bestehende Quantum Game Studio, das Dark Mirror HTML5-Spiel und die modularen KI-Game-Mod-Generatoren.
 
-## 🎮 Was die Engine erzeugt
+## Integrierte Oberflächen
+- `/studio` — Game/DLC/Mod Blueprint und Projektgenerator
+- `/dark-mirror-game/` — integriertes HTML5-Canvas-Spiel
+- `/dark-mirror-game/ki-game-mod.html` — KI Game Mod Studio mit 12 Modulen
+- `/health` — Dienststatus
 
-Aus einer natürlichen Idee kann das Studio ein strukturiertes **Game, DLC oder Mod** für Web, Godot, Unity oder Unreal vorbereiten.
+## KI Game Mod API
+- `GET /api/ki-game-mod/health`
+- `POST /api/ki-game-mod/mods/generate`
+- `POST /api/ki-game-mod/world`
+- `POST /api/ki-game-mod/quest`
+- `POST /api/ki-game-mod/npc`
+- `POST /api/ki-game-mod/combat`
+- `POST /api/ki-game-mod/loot`
+- `POST /api/ki-game-mod/boss`
+- `POST /api/ki-game-mod/events`
+- `POST /api/ki-game-mod/director/event`
+- `POST /api/ki-game-mod/factions/<faction>`
+- `POST /api/ki-game-mod/ai`
+- `GET /api/ki-game-mod/memory`
 
-Generation Pipeline:
+The merged mod engine uses deterministic/offline generation by default and never executes generated code. The frontend keeps local draft fallback behavior if the backend is unavailable.
 
-`Idee → Concept → Game Design → Gameplay → Welt → Charaktere/NPCs → Quests → Items → UI → Assets → Audio → Rendering → Tests → Package`
+## Start / deploy
+```bash
+pip install -r requirements.txt
+gunicorn --bind 0.0.0.0:$PORT app:app
+```
 
-## 🧠 Dunkle-Spiegel-Systeme
+Set `OPENAI_API_KEY` only in Render environment variables if the optional remote AI is required. Do not commit secrets. Target FPS and quality presets are goals, not hardware performance guarantees.
 
-- Mirror-World / Spiegelwelten
-- KI-Begleiter **Master-Kater**
-- persönliche Avatar-Systeme
-- prozedurale Welt- und Quest-Strukturen
-- NPC-KI-Blueprints
-- datengetriebene Items und Inhalte
-- Game / DLC / Mod-Pipeline
-- engine-agnostische Projektverträge
-
-## 🖥️ High-End Rendering
-
-Das Studio enthält ein `4k_ultra` Zielprofil mit 3840×2160, HDR, Raytracing, dynamischer Auflösung, Adaptive Quality, Texture Streaming, LOD, Occlusion Culling, Instancing und DLSS/FSR/XeSS-Optionen.
-
-**Hinweis:** Zielprofile garantieren keine bestimmte FPS-Zahl. Die reale Leistung hängt von Engine, GPU, Szene, Shadern und Assets ab.
-
-## 🚀 Game Studio
-
-Starte den Flask-Server und öffne `/studio`.
-
-Das Studio bietet:
-
-1. Prompt eingeben
-2. Game / DLC / Mod auswählen
-3. Ziel-Engine auswählen
-4. Qualitäts- und FPS-Profil wählen
-5. Blueprint planen
-6. KI-generiertes Projekt erzeugen
-7. ZIP-Projekt herunterladen
-
-Mit `OPENAI_API_KEY` wird die KI-gestützte Code-Architektur aktiviert; ohne Schlüssel steht ein lokaler Fallback zur Verfügung.
-
-## 🔐 Architektur
-
-Generierter Code wird nicht automatisch im Flask-Prozess ausgeführt. Für Godot/Unity/Unreal sind isolierte Build-Worker vorgesehen. Dadurch kann die Web-Anwendung vom späteren Build-System getrennt werden.
-
-## 🧪 Qualitätssicherung
-
-GitHub Actions prüft Python-Kompilierung, Game-Engine-Tests und API-Smoke-Tests.
-
-## 📁 Zentrale Engine-Dateien
-
-- `game_engine.py` — Code-/Projektgenerator
-- `studio_api.py` — Game-Studio-API
-- `quantum_game_engine/pipeline.py` — Generation Pipeline
-- `quantum_game_engine/generation_v2.py` — V2-Orchestrator
-- `quantum_game_engine/dunkle_spiegel.py` — Welt-/Designschicht
-- `quantum_game_engine/rendering.py` — High-End Renderingprofile
-- `quantum_game_engine/schemas.py` — stabile Datenverträge
-- `game_studio.html/js/css` — Web Studio
-
-## ⚠️ Aktueller Entwicklungsstand
-
-Die Engine ist ein funktionierendes **Generator-Framework und Projekt-Scaffold**. Vollautomatische AAA-Asset-Erzeugung, native Engine-Builds und sichere Build-Worker sind separate Produktionsstufen und werden nicht als bereits fertig behauptet.
+## Source lineage
+- `QUANTUM-MIRROR-DARK-WONDERLAND`: browser game and KI Game Mod frontend copied into `dark_mirror_game/`.
+- `KI-Game-Mod`: modular generators copied into `ki_game_mod/engine/` and exposed through `ki_game_mod_api.py`.
+- `Quantum.MIrror.Wonderland`: existing Flask API, pipeline and generation workflow retained as the primary backend.
