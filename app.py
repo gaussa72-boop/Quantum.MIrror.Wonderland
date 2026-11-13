@@ -80,7 +80,7 @@ def index():
 
 @app.route('/health')
 def health():
-    return jsonify({'status':'healthy','service':'Quantum Mirror Wonderland','version':'2.0.0','game_studio':True}), 200
+    return jsonify({'status':'healthy','service':'Quantum Mirror Wonderland','version':'2.0.0','game_studio':True,'ai_enabled':os.getenv('AI_ENABLED','true').lower()=='true','ai_configured':bool(os.getenv('OPENAI_API_KEY','').strip() or os.getenv('OPENROUTER_API_KEY','').strip()),'provider':os.getenv('AI_PROVIDER','openai'),'model':os.getenv('OPENAI_MODEL','gpt-4o-mini')}), 200
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -120,30 +120,35 @@ def engine_alias():
 def ai_chat():
     data=request.get_json(silent=True) or {}
     message=str(data.get('message') or '').strip()
-    selected_model=str(data.get('model') or os.getenv('OPENAI_MODEL','openai/gpt-5.6-luna')).strip()
-    if not message: return jsonify({'error':'message is required'}),400
-    key=os.getenv('OPENAI_API_KEY')
-    router_key=os.getenv('OPENROUTER_API_KEY')
-    router_key=os.getenv('OPENROUTER_API_KEY')
-    if not (key or router_key) or OpenAI is None:
-        return jsonify({'error':'OPENAI_API_KEY is not configured'}),503
+    if not message:return jsonify({'error':'message is required'}),400
+    if len(message)>12000:return jsonify({'error':'Nachricht ist zu lang (max. 12.000 Zeichen).'}),413
+    if os.getenv('AI_ENABLED','true').strip().lower()!='true':
+        return jsonify({'error':'KI ist mit AI_ENABLED=false deaktiviert.'}),503
+    openai_key=os.getenv('OPENAI_API_KEY','').strip()
+    router_key=os.getenv('OPENROUTER_API_KEY','').strip()
+    provider=os.getenv('AI_PROVIDER','openai').strip().lower()
+    if not (openai_key or router_key) or OpenAI is None:
+        return jsonify({'error':'OPENAI_API_KEY oder OPENROUTER_API_KEY fehlt in Render.'}),503
+    use_router=(provider=='openrouter' and bool(router_key)) or (not openai_key and bool(router_key))
+    model=(os.getenv('OPENROUTER_MODEL','openai/gpt-4o-mini').strip() if use_router else os.getenv('OPENAI_MODEL','gpt-4o-mini').strip())
     try:
-        tools=[{'type':'web_search','search_context_size':'medium'}] if os.getenv('ENABLE_WEB_SEARCH','true').lower()=='true' else []
-        response=(OpenAI(api_key=router_key,base_url='https://openrouter.ai/api/v1') if router_key else OpenAI(api_key=key)).responses.create(
-            model=selected_model,
-            reasoning={'effort':'high'},
-            tools=tools,
-            tool_choice='auto',
-            store=False,
-            input=[
-                {'role':'system','content':'Du bist Quantum Mirror Wonderland. Arbeite wie ein moderner KI-Architekt für Game Design, Worldbuilding, Code und Recherche. Liefere konkrete, sichere und überprüfbare Ergebnisse.'},
-                {'role':'user','content':message}
-            ]
-        )
-        return jsonify({'response':response.output_text or 'Keine Antwort.','model':selected_model})
+        system='Du bist Quantum Mirror Wonderland. Arbeite wie ein moderner KI-Architekt für Game Design, Worldbuilding, Code und Recherche. Liefere konkrete, sichere und überprüfbare Ergebnisse.'
+        if use_router:
+            active=OpenAI(api_key=router_key,base_url='https://openrouter.ai/api/v1')
+            response=active.chat.completions.create(model=model,messages=[{'role':'system','content':system},{'role':'user','content':message}])
+            answer=response.choices[0].message.content or 'Keine Antwort.'
+        else:
+            active=OpenAI(api_key=openai_key)
+            options={'model':model,'instructions':system,'input':message,'store':False}
+            if os.getenv('ENABLE_WEB_SEARCH','true').lower()=='true':
+                options['tools']=[{'type':'web_search','search_context_size':'medium'}]
+                options['tool_choice']='auto'
+            response=active.responses.create(**options)
+            answer=response.output_text or 'Keine Antwort.'
+        return jsonify({'response':answer,'model':model,'provider':'openrouter' if use_router else 'openai'}),200
     except Exception:
-        app.logger.exception('Astra chat failure')
-        return jsonify({'error':'KI-Schnittstelle momentan nicht erreichbar.'}),502
+        app.logger.exception('Quantum Mirror AI request failed (%s / %s)',provider,model)
+        return jsonify({'error':'KI-Schnittstelle fehlgeschlagen. Prüfe API-Key, Modellfreigabe und Guthaben.'}),502
 
 @app.route('/api/chat/send',methods=['POST'])
 def send_chat_message():
