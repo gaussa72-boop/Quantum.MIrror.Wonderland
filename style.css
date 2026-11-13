@@ -810,3 +810,28 @@ html{color-scheme:dark;scroll-behavior:smooth}body{background:radial-gradient(el
 button,input,textarea,select{font:inherit}input,textarea,select{background:rgba(10,13,21,.88);color:var(--chat-text);border:1px solid var(--chat-line);border-radius:14px;padding:12px 15px;outline:none;transition:border-color .2s,box-shadow .2s}input:focus,textarea:focus,select:focus{border-color:var(--chat-accent);box-shadow:0 0 0 3px var(--chat-glow)}button{border:1px solid var(--chat-line);border-radius:13px;transition:transform .18s,border-color .18s,box-shadow .18s;cursor:pointer}button:hover{border-color:var(--chat-accent);box-shadow:0 0 22px var(--chat-glow);transform:translateY(-1px)}
 nav,aside,[class*="sidebar"],[id*="sidebar"]{background:rgba(10,13,21,.88);border-color:var(--chat-line);backdrop-filter:blur(20px)}main,[class*="panel"],[class*="card"],.container{border-color:var(--chat-line)}[class*="card"],[class*="panel"]{border-radius:18px;box-shadow:0 12px 38px rgba(0,0,0,.18)}a{color:var(--chat-accent)}::selection{background:var(--chat-glow)}
 @media(max-width:760px){body{min-height:100dvh}nav,[class*="sidebar"],[id*="sidebar"]{max-width:100%;}main,.container{width:100%;max-width:100%;padding-left:14px;padding-right:14px}button{min-height:42px}input,textarea{max-width:100%;box-sizing:border-box}}
+
+
+/* Ultima responsive polish — retain game controls and scene behavior */
+html{width:100%;height:100%;overflow:hidden}
+body{width:100%;height:100dvh;min-height:100%;overflow:hidden;overscroll-behavior:none}
+.sacred-geometry-container{width:min(600px,78vw,78vh);height:min(600px,78vw,78vh)}
+.agents-orbit-container{width:min(800px,96vw,96vh);height:min(800px,96vw,96vh)}
+.agent-orbit{width:clamp(58px,8vw,100px);height:clamp(58px,8vw,100px);margin:calc(clamp(58px,8vw,100px)/-2) 0 0 calc(clamp(58px,8vw,100px)/-2)}
+.active-agent-info{max-width:min(420px,88vw);max-height:55dvh;overflow:auto}
+.chat-interface{max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px)}
+img,canvas{max-width:100%}
+button{touch-action:manipulation}
+:focus-visible{outline:2px solid #00ced1;outline-offset:4px}
+@media(max-width:760px){
+ .sacred-geometry-container{width:min(78vw,60vh);height:min(78vw,60vh)}
+ .agents-orbit-container{width:94vw;height:94vw}
+ @keyframes orbit{from{transform:rotate(0deg) translateX(min(37vw,220px)) rotate(0deg)}to{transform:rotate(360deg) translateX(min(37vw,220px)) rotate(-360deg)}}
+ .agent-icon{font-size:1.7em}
+ .agent-name{font-size:.58em}
+ .active-agent-info{padding:16px;border-radius:14px}
+ .active-agent-icon{font-size:2.5em}
+ .active-agent-name{font-size:1.35em}
+ .chat-interface{left:12px;right:12px;bottom:12px;width:auto;height:min(62dvh,520px)}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
