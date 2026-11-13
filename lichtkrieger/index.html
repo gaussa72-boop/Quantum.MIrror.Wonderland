@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090813"><meta name="description" content="LICHTKRIEGER — Cloud Gaming Universe und KI Game Studio">
+<title>LICHTKRIEGER — Cloud Gaming Universe</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="ambient a1"></div><div class="ambient a2"></div>
+<header class="topbar">
+ <a class="brand" href="#"><span class="brand-mark">✦</span><span>LICHTKRIEGER<small> CLOUD GAMING UNIVERSE</small></span></a>
+ <nav><a href="#discover">Entdecken</a><a href="#studio">Game Studio</a><a href="#community">Community</a></nav>
+ <div class="top-actions"><button class="ghost" id="loginBtn">Profil erstellen</button><button class="gold" id="premiumBtn">✧ Premium</button><button class="avatar" id="profileBtn">AG</button></div>
+</header>
+<main>
+<section class="hero">
+ <div class="hero-copy"><div class="eyebrow"><span class="pulse"></span> DEIN UNIVERSUM. DEINE REGELN.</div>
+ <h1>Spiele nicht nur.<br><em>Erschaffe Welten.</em></h1>
+ <p>Eine neue Dimension des Gamings: Entdecke Welten, spiele direkt im Browser und verwandle KI-generierte Ideen in lebendige Spiele.</p>
+ <div class="hero-actions"><a class="gold big" href="#discover">Universum betreten <span>↗</span></a><a class="outline big" href="#studio">Game Studio öffnen</a></div>
+ <div class="hero-stats"><div><b>∞</b><span>Welten möglich</span></div><div><b>01</b><span>Dein Game Hub</span></div><div><b>24/7</b><span>Dein Universum</span></div></div></div>
+ <div class="hero-art"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="core"><span>✦</span></div><div class="art-label"><small>REALM 001</small><b>THE FIRST LIGHT</b><span>Eine Welt wartet auf dich</span></div></div>
+</section>
+<section class="section" id="discover"><div class="section-head"><div><div class="eyebrow">DEIN NÄCHSTES ABENTEUER</div><h2>Entdecke <em>Welten</em></h2></div><div class="filters"><button class="filter active" data-filter="all">Alle</button><button class="filter" data-filter="featured">Highlights</button><button class="filter" data-filter="created">Meine Kreationen</button></div></div>
+<div class="game-grid" id="gameGrid">
+ <article class="game-card featured" data-tags="featured"><div class="game-art art-dark"><span class="art-symbol">◈</span><span class="game-tag">ENGINE INTEGRATION</span></div><div class="game-info"><div><h3>Dark Mirror: Wonderland</h3><p>Das Reich hinter dem Spiegel</p></div><button class="play" data-game="darkmirror">▶ Spielen</button></div><div class="card-meta"><span>✦ Quantum Engine</span><span>Browser-Spiel</span></div></article>
+ <article class="game-card featured" data-tags="featured"><div class="game-art art-astral"><span class="art-symbol">✧</span><span class="game-tag">COMMUNITY WORLD</span></div><div class="game-info"><div><h3>Chronicles of Light</h3><p>Ein neues Reich entdecken</p></div><button class="play" data-game="demo">▶ Vorschau</button></div><div class="card-meta"><span>✦ Lichtkrieger Studio</span><span>Demo-Welt</span></div></article>
+ <article class="game-card" data-tags="created"><div class="game-art art-forge"><span class="art-symbol">⚒</span><span class="game-tag">GAME CREATOR</span></div><div class="game-info"><div><h3>Deine nächste Welt</h3><p>Aus einer Idee wird ein Spiel</p></div><button class="play" id="createFromCard">＋ Erstellen</button></div><div class="card-meta"><span>✦ KI Game Studio</span><span>Dein Projekt</span></div></article>
+</div></section>
+<section class="studio-section" id="studio"><div class="section-head"><div><div class="eyebrow">KREATION OHNE GRENZEN</div><h2>Dein <em>Game Studio</em></h2></div><span class="studio-pill">ENGINE CONNECTOR · BETA</span></div>
+<div class="studio-layout"><div class="studio-main"><div class="studio-intro"><div class="studio-icon">✧</div><div><h3>Aus deiner Vision wird eine Welt</h3><p>Importiere Game-Projekte aus deinen Engines, passe Titel und Beschreibung an und verwalte deine Builds.</p></div></div>
+<label class="field-label" for="worldName">Name deiner Welt</label><input id="worldName" placeholder="z. B. Das Königreich des Lichts">
+<label class="field-label" for="worldPrompt">Beschreibe deine Spielidee</label><textarea id="worldPrompt" rows="3" placeholder="Eine epische Fantasy-Welt mit schwebenden Inseln, uralten Tempeln und leuchtenden Portalen ..."></textarea>
+<div class="studio-controls"><label class="select-wrap">Genre<select id="genre"><option>Fantasy</option><option>Sci-Fi</option><option>Action Adventure</option><option>RPG</option><option>Strategie</option><option>Simulation</option></select></label><label class="select-wrap">Stil<select id="style"><option>Dark Fantasy</option><option>Cinematic</option><option>Pixel Art</option><option>Realistisch</option><option>Anime</option></select></label></div>
+<button class="gold generate" id="generateBtn">✧ Welt-Konzept erstellen</button><div class="result" id="generationResult" hidden></div></div>
+<aside class="engine-panel"><div class="panel-title"><span>VERBUNDENE GAME ENGINES</span><span class="status-dot"></span></div><div class="engine-row"><span class="engine-logo">Q</span><div><b>Quantum Mirror Engine</b><small>Studio & World Builder</small></div><span class="connected">API</span></div><div class="engine-row"><span class="engine-logo purple">M</span><div><b>Dark Mirror Game</b><small>HTML5 Browser Game</small></div><span class="connected">WEB</span></div><div class="engine-row"><span class="engine-logo gold-logo">✧</span><div><b>KI Game Mod</b><small>12 Generator-Module</small></div><span class="connected">API</span></div>
+<div class="engine-connect"><label class="field-label" for="engineUrl">Eigene Engine-URL</label><input id="engineUrl" placeholder="https://deine-engine.onrender.com"><button class="outline full" id="saveEngine">Engine-Adresse speichern</button><small>Verbindungen werden lokal in diesem Browser gespeichert. API-Zugriff muss durch die jeweilige Engine freigegeben sein.</small></div>
+<div class="import-area"><label for="gameImport" class="outline full import-label">↑ Spielprojekt importieren (JSON / HTML / ZIP)</label><input type="file" id="gameImport" accept=".json,.html,.zip" hidden><small id="importStatus">Importiere Builds und Projekt-Metadaten.</small></div></aside></div></section>
+<section class="community-section" id="community"><div><div class="eyebrow">DIE GILDEN DES LICHTS</div><h2>Gemeinsam erschaffen.<br><em>Zusammen spielen.</em></h2><p>Erstelle dein Profil, sammle deine Welten und werde Teil einer Community aus Spielern und Entwicklern.</p><button class="outline big" id="communityJoin">Profil einrichten ↗</button></div><div class="community-cards"><div class="mini-card"><span>♜</span><b>Spielerprofile</b><small>Deine Identität im Universum</small></div><div class="mini-card"><span>✧</span><b>Creator-Ränge</b><small>Zeige deine Kreationen</small></div><div class="mini-card premium-card"><span>♛</span><b>Premium-Gilden</b><small>Mehr Raum für deine Welten</small></div></div></section>
+<section class="profile-strip"><div><div class="eyebrow">DEIN KONTROLLZENTRUM</div><h2>Ein Profil. <em>Alle Welten.</em></h2><p>Verwalte deine Spiele, Favoriten, Kreationen und Mitgliedschaft an einem Ort.</p></div><div class="profile-actions"><button class="outline" id="myGames">Meine Spiele</button><button class="gold" id="adminBtn">Admin-Konsole</button></div></section>
+</main>
+<footer><a class="brand" href="#"><span class="brand-mark">✦</span><span>LICHTKRIEGER<small> CLOUD GAMING UNIVERSE</small></span></a><span>Ein Universum von gaussa72-boop</span><span>© 2026 LICHTKRIEGER</span></footer>
+<div class="modal-backdrop" id="modal" hidden><div class="modal"><button class="close" id="closeModal">×</button><div class="eyebrow" id="modalEyebrow">DEIN PROFIL</div><h2 id="modalTitle">Willkommen im Universum</h2><div id="modalBody"></div></div></div>
+<script src="app.js"></script>
+</body></html>
