@@ -59,5 +59,20 @@
    out.textContent=t.title+"\n"+lines+"\n\n"+data.items["Anpassung an deine Idee"]+engineText+blueprintText;
   }
  };
- window.exportDraft=function(){const data=drafts[0]||{module:"Dark Mirror AI Game Studio",items:{},note:"Bitte zuerst ein Modul auswählen."};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));const a=document.createElement("a");a.href=url;a.download="dark-mirror-game-draft.json";a.click();URL.revokeObjectURL(url);};
+ window.importFilmProject=async function(){
+ const input=document.getElementById("filmProjectFile"),status=document.getElementById("filmImportStatus"),file=input?.files?.[0];
+ if(!file){status.textContent="Bitte zuerst eine NovaTube-JSON-Datei auswählen.";return}
+ try{
+  const project=JSON.parse(await file.text());
+  if(project.schema!=="novatube.film-project.v1"||!Array.isArray(project.scenes)||typeof project.idea!=="string"){status.textContent="Dateiformat nicht erkannt. Bitte eine NovaTube-Filmprojektdatei importieren.";return}
+  const safeProject={schema:project.schema,title:String(project.title||"NovaTube Filmprojekt").slice(0,160),idea:project.idea.slice(0,12000),genre:String(project.genre||"Fantasy").slice(0,80),visualStyle:String(project.visualStyle||"Filmisch-realistisch").slice(0,100),durationMinutes:Math.max(1,Math.min(120,Number(project.durationMinutes)||120)),characters:String(project.characters||"").slice(0,5000),scenes:project.scenes.slice(0,300).map(s=>({number:Number(s.number)||0,startMinute:Number(s.startMinute)||0,endMinute:Number(s.endMinute)||0,storyBeat:String(s.storyBeat||"").slice(0,1000),transition:String(s.transition||"").slice(0,500)}))};
+  localStorage.setItem("darkMirror.novaTubeFilmProject",JSON.stringify(safeProject));
+  const response=await fetch("/api/ki-game-mod/mods/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({theme:(safeProject.genre+" – "+safeProject.idea).slice(0,80),level:10})});
+  let enginePack=null;if(response.ok)enginePack=await response.json();
+  const imported={source:"NovaTube",project:safeProject,gameModPack:enginePack,importedAt:new Date().toISOString(),status:enginePack?"Engine-Entwurf erzeugt":"Projekt lokal gespeichert; Backend nicht erreichbar"};
+  localStorage.setItem("darkMirror.novaTubeGameImport",JSON.stringify(imported));
+  status.textContent="Import erfolgreich: "+safeProject.title+" · "+safeProject.scenes.length+" Filmszenen · "+safeProject.durationMinutes+" Minuten. "+imported.status+". Der Entwurf ist lokal gespeichert und kann weiterbearbeitet werden.";
+ }catch(error){status.textContent="Import fehlgeschlagen: "+String(error.message||error)}
+};
+window.exportDraft=function(){const data=drafts[0]||{module:"Dark Mirror AI Game Studio",items:{},note:"Bitte zuerst ein Modul auswählen."};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));const a=document.createElement("a");a.href=url;a.download="dark-mirror-game-draft.json";a.click();URL.revokeObjectURL(url);};
 })();
