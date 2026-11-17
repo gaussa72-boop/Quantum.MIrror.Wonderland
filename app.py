@@ -80,7 +80,7 @@ def index():
 
 @app.route('/health')
 def health():
-    return jsonify({'status':'healthy','service':'Quantum Mirror Wonderland','version':'2.0.0','game_studio':True,'ai_enabled':os.getenv('AI_ENABLED','true').lower()=='true','ai_configured':bool(os.getenv('OPENAI_API_KEY','').strip() or os.getenv('OPENROUTER_API_KEY','').strip()),'provider':os.getenv('AI_PROVIDER','openai'),'model':os.getenv('OPENAI_MODEL','gpt-4o-mini')}), 200
+    return jsonify({'status':'healthy','service':'Quantum Mirror Wonderland','version':'2.0.0','game_studio':True,'ai_enabled':os.getenv('AI_ENABLED','true').lower()=='true','ai_configured':os.getenv('AI_ENABLED','true').lower()=='true' and bool(os.getenv('OPENAI_API_KEY','').strip() or os.getenv('OPENROUTER_API_KEY','').strip()),'provider':os.getenv('AI_PROVIDER','openai'),'model':os.getenv('OPENAI_MODEL','gpt-4o-mini')}), 200
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -134,11 +134,11 @@ def ai_chat():
     try:
         system='Du bist Quantum Mirror Wonderland. Arbeite wie ein moderner KI-Architekt für Game Design, Worldbuilding, Code und Recherche. Liefere konkrete, sichere und überprüfbare Ergebnisse.'
         if use_router:
-            active=OpenAI(api_key=router_key,base_url='https://openrouter.ai/api/v1')
+            active=OpenAI(api_key=router_key,base_url='https://openrouter.ai/api/v1',timeout=45,max_retries=1)
             response=active.chat.completions.create(model=model,messages=[{'role':'system','content':system},{'role':'user','content':message}])
             answer=response.choices[0].message.content or 'Keine Antwort.'
         else:
-            active=OpenAI(api_key=openai_key)
+            active=OpenAI(api_key=openai_key,timeout=45,max_retries=1)
             options={'model':model,'instructions':system,'input':message,'store':False}
             if os.getenv('ENABLE_WEB_SEARCH','true').lower()=='true':
                 options['tools']=[{'type':'web_search','search_context_size':'medium'}]
