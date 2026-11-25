@@ -15,6 +15,9 @@ except Exception:
 
 app = Flask(__name__, static_folder='.', static_url_path='')
 
+from agent_bridge import register_agent_bridge
+register_agent_bridge(app, agent_id='quantum_mirror', display_name='Quantum Mirror', persona='Du entwickelst immersive Spielwelten, NPC-Logik, Quests und Simulationen. Du analysierst Spielmechaniken und technische Architektur.')
+
 # SECURITY HARDENING
 _SEC_RATE_LIMIT={}
 from time import monotonic
