@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "library": "ULTIMA Game Library",
+  "integration_policy": "separate-engines-shared-manifest",
+  "games": [
+    {"id":"spiritual-warfare","title":"Spiritual Warfare","kind":"playable-prototype","path":"/spiritual-warfare/","engine":"quantum-mirror","features":["exploration","light-energy","influence","factions","alliances"]},
+    {"id":"quantum-mirror-wonderland","title":"Quantum Mirror Wonderland","kind":"game-engine","path":"/studio","engine":"quantum-mirror"},
+    {"id":"dark-mirror-wonderland","title":"Dark Mirror Wonderland","kind":"game","path":"/dark-mirror-game/","engine":"quantum-mirror"},
+    {"id":"ki-game-mod","title":"KI Game Mod","kind":"generation-engine","path":"/dark-mirror-game/ki-game-mod.html","engine":"quantum-mirror"},
+    {"id":"lichtkrieger","title":"Lichtkrieger","kind":"planned-game","status":"integration-pending"},
+    {"id":"the-lord","title":"The Lord","kind":"planned-game","status":"integration-pending"},
+    {"id":"quantenformel-sim","title":"Quantenformel Simulationen","kind":"simulation-project","status":"integration-pending"}
+  ],
+  "community": {"enabled": false, "status": "planned", "required_controls": ["authentication","creator-consent","moderation","malware-scan","versioning","license-check"]}
+}
