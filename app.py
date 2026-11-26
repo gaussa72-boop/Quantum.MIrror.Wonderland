@@ -202,6 +202,27 @@ def dark_mirror_game_index():
 def dark_mirror_game_assets(filename):
     return send_from_directory(os.path.join(os.path.dirname(__file__), 'dark_mirror_game'), filename)
 
+
+@app.route('/spiritual-warfare')
+def spiritual_warfare_redirect():
+    return redirect('/spiritual-warfare/')
+
+@app.route('/spiritual-warfare/')
+def spiritual_warfare_index():
+    return send_from_directory(os.path.join(os.path.dirname(__file__), 'spiritual-warfare'), 'index.html')
+
+@app.route('/game-library')
+def game_library_redirect():
+    return redirect('/game-library/')
+
+@app.route('/game-library/')
+def game_library_index():
+    return send_from_directory(os.path.join(os.path.dirname(__file__), 'game-library'), 'index.html')
+
+@app.route('/game-library/<path:filename>')
+def game_library_assets(filename):
+    return send_from_directory(os.path.join(os.path.dirname(__file__), 'game-library'), filename)
+
 @app.errorhandler(404)
 def not_found(error): return jsonify({'error':'Not found'}),404
 @app.errorhandler(500)
