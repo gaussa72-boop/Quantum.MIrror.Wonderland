@@ -195,6 +195,10 @@ register_game_engine_federation(app)
 def game_engines_dashboard():
     return send_from_directory(os.path.join(os.path.dirname(__file__), 'game-engines'), 'index.html')
 
+@app.route('/game-engines/<path:filename>')
+def game_engines_assets(filename):
+    return send_from_directory(os.path.join(os.path.dirname(__file__), 'game-engines'), filename)
+
 
 @app.route('/dark-mirror-game')
 def dark_mirror_game_index_redirect():
