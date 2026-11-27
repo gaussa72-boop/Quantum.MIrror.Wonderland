@@ -1,16 +1,18 @@
 {
   "schema": "astralis.engine-federation.v1",
   "project": "Spiritual Warfare",
-  "strategy": "Adapter-based federation; each engine retains its own identity and repository.",
+  "strategy": "Adapter-based federation; independent repositories and engine identities are preserved.",
   "sharedLibrary": "/game-library/",
   "primaryOrchestrator": "Quantum.MIrror.Wonderland",
   "engines": [
     {
-      "id": "quantum-mirror-wonderland",
+      "id": "quantum-mirror",
       "repository": "gaussa72-boop/Quantum.MIrror.Wonderland",
       "role": "primary-orchestrator",
-      "integration": "native-api",
+      "integration": "native-local-api",
+      "renderService": "quantum-mirror-wonderland",
       "verifiedEndpoints": [
+        "/health",
         "/api/ki-game-mod/world",
         "/api/ki-game-mod/quest",
         "/api/ki-game-mod/npc",
@@ -24,29 +26,54 @@
     {
       "id": "ki-game-mod",
       "repository": "gaussa72-boop/KI-Game-Mod",
-      "role": "modular-generation-engine",
-      "integration": "merged-module-via-quantum-mirror-api",
-      "verifiedEndpoints": []
+      "role": "generation-engine",
+      "integration": "merged-module-in-quantum-mirror-plus-standalone-api",
+      "renderService": "ki-game-mod",
+      "verifiedEndpoints": [
+        "/health",
+        "/mods/generate",
+        "/world",
+        "/quest",
+        "/npc",
+        "/combat",
+        "/loot",
+        "/boss",
+        "/director/event"
+      ]
     },
     {
       "id": "the-lord",
       "repository": "gaussa72-boop/The-Lord",
-      "role": "game-project",
-      "integration": "adapter-pending",
-      "verifiedEndpoints": []
+      "role": "agent-network-and-game-studio",
+      "integration": "agent-network-api-available-provider-endpoints-unconfigured-until-verified",
+      "renderService": "the-lord-agent-network",
+      "verifiedEndpoints": [
+        "/health",
+        "/api/v1/agents"
+      ]
     },
     {
       "id": "lichtkrieger",
       "repository": "gaussa72-boop/Lichtkrieger",
-      "role": "game-project",
-      "integration": "adapter-pending",
+      "role": "playable-browser-game-content",
+      "integration": "static-content-service; runtime-adapter-pending",
+      "renderService": "lichtkrieger-dark-mirror-realms",
       "verifiedEndpoints": []
     },
     {
       "id": "dark-wonderland",
       "repository": "gaussa72-boop/QUANTUM-MIRROR-DARK-WONDERLAND",
-      "role": "browser-game-project",
-      "integration": "source-lineage-and-frontend-module",
+      "role": "browser-game-content",
+      "integration": "static-content-service; runtime-adapter-pending",
+      "renderService": "quantum-mirror-dark-wonderland",
+      "verifiedEndpoints": []
+    },
+    {
+      "id": "neuroforge",
+      "repository": "gaussa72-boop/Neuroforge",
+      "role": "creative-and-visual-direction",
+      "integration": "static-concept-service; game-runtime-adapter-pending",
+      "renderService": "neuroforge-2035",
       "verifiedEndpoints": []
     }
   ],
@@ -59,7 +86,7 @@
     ],
     "features": [
       "world streaming",
-      "LOD and HLOD",
+      "LOD/HLOD",
       "dynamic lighting and shadows",
       "NPC schedules and behavior trees",
       "procedural character and environment assets",
@@ -68,9 +95,9 @@
       "save and multiplayer services"
     ]
   },
-  "gates": [
+  "releaseGates": [
     "schema validation",
-    "code generation sandbox",
+    "sandboxed code generation",
     "static analysis",
     "unit and integration tests",
     "asset and license validation",
@@ -78,5 +105,5 @@
     "target-hardware performance test",
     "manual approval before publish"
   ],
-  "status": "integration-manifest-created; not all engines connected; no native AAA build verified"
+  "status": "federation-registry-and-local-orchestration-implemented; remote-health-and-native-build-verification-pending"
 }
