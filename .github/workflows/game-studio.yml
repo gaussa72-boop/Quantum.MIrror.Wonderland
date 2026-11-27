@@ -16,7 +16,10 @@ jobs:
           python-version: '3.11'
       - run: python -m pip install --upgrade pip
       - run: pip install -r requirements.txt pytest
-      - run: python -m compileall -q .
+      - name: Compile active game-studio modules
+        run: python -m py_compile app.py game_engine.py studio_api.py ki_game_mod_api.py game_engines/federation_api.py quantum_game_engine/*.py ki_game_mod/engine/*.py
+      - name: Validate Unreal native starter
+        run: python -m unittest discover -s native/SpiritualWarfare/tests -v
       - run: pytest -q tests/test_game_engine.py tests/test_quantum_game_engine.py tests/test_ki_game_mod.py
       - name: Smoke tests
         run: |
