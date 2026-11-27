@@ -1,0 +1,39 @@
+name: Unreal Native Project Validation
+on:
+  push:
+    paths:
+      - 'native/SpiritualWarfare/**'
+      - '.github/workflows/unreal-native.yml'
+  pull_request:
+    paths:
+      - 'native/SpiritualWarfare/**'
+      - '.github/workflows/unreal-native.yml'
+  workflow_dispatch:
+    inputs:
+      build_unreal:
+        description: 'Run a real Unreal build on a configured self-hosted Windows runner'
+        required: true
+        default: false
+        type: boolean
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate native project scaffold
+        run: python -m unittest discover -s native/SpiritualWarfare/tests -v
+
+  unreal-build:
+    if: github.event_name == 'workflow_dispatch' && inputs.build_unreal
+    runs-on: [self-hosted, windows, unreal-engine-5]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Unreal Editor target
+        shell: pwsh
+        run: |
+          if (-not $env:UE_ROOT) { throw 'UE_ROOT must point to the installed Unreal Engine 5.6 directory.' }
+          & "$env:UE_ROOT\Engine\Build\BatchFiles\Build.bat" SpiritualWarfareEditor Win64 Development "$PWD\native\SpiritualWarfare\SpiritualWarfare.uproject" -WaitMutex
