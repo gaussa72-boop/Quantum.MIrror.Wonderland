@@ -188,6 +188,12 @@ from studio_api import register_studio_routes
 register_studio_routes(app)
 from ki_game_mod_api import register_ki_game_mod_routes
 register_ki_game_mod_routes(app)
+from game_engines.federation_api import register_game_engine_federation
+register_game_engine_federation(app)
+
+@app.route('/game-engines/')
+def game_engines_dashboard():
+    return send_from_directory(os.path.join(os.path.dirname(__file__), 'game-engines'), 'index.html')
 
 
 @app.route('/dark-mirror-game')
