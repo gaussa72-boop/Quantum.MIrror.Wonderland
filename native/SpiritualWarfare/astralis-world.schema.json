@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Astralis World Seed",
+  "type": "object",
+  "required": ["schema_version", "world_id", "seed", "regions", "npcs"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "world_id": { "type": "string", "minLength": 1 },
+    "seed": { "type": "integer" },
+    "regions": { "type": "array", "items": { "type": "object", "required": ["region_id", "biome", "recommended_level"], "properties": { "region_id": { "type": "string" }, "biome": { "enum": ["celestial_highlands", "elderwood", "astral_desert", "void_frontier", "crystal_sea"] }, "recommended_level": { "type": "integer", "minimum": 1, "maximum": 999 }, "threat_level": { "type": "number", "minimum": 0, "maximum": 1 } } } },
+    "npcs": { "type": "array", "items": { "type": "object", "required": ["character_id", "archetype", "faction"], "properties": { "character_id": { "type": "string" }, "archetype": { "type": "string" }, "faction": { "type": "string" }, "disposition": { "type": "number", "minimum": -1, "maximum": 1 }, "memory_summary": { "type": "string" } } } }
+  }
+}
