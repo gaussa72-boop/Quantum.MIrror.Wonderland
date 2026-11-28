@@ -835,3 +835,17 @@ button{touch-action:manipulation}
  .chat-interface{left:12px;right:12px;bottom:12px;width:auto;height:min(62dvh,520px)}
 }
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+
+/* Mobile chat visibility: lift the chat above Safari's bottom controls and floating dock. */
+@media (max-width: 760px) {
+  #chat-container.chat-interface {
+    bottom: calc(96px + env(safe-area-inset-bottom)) !important;
+    z-index: 2147483001 !important;
+    max-height: calc(100dvh - 132px) !important;
+    height: min(62dvh, 500px) !important;
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+  }
+}
